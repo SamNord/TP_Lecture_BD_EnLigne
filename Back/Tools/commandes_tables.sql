@@ -1,3 +1,0 @@
-sqllocaldb c TP_Lecture_BD_EnLigne
-
-sqllocaldb s TP_Lecture_BD_EnLigne

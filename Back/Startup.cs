@@ -44,6 +44,7 @@ namespace Back
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
             app.UseCors();
             app.UseMvc();
         }
