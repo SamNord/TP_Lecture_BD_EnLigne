@@ -15,8 +15,6 @@ namespace Back.Tools
 
         public DbSet<Categorie> Categorie { get; set; }
 
-        public DbSet<Cover> Cover { get; set; }
-
         public DbSet<Admin> Admin { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

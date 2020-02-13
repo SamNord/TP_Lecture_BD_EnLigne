@@ -22,13 +22,11 @@ namespace Back.Models
         public int CategorieId { get => categorieId; set => categorieId = value; }
         public string UrlCover { get => urlCover; set => urlCover = value; }
 
-        [JsonIgnore]
-        public Cover Cover { get; set; }
 
-        [JsonIgnore]
+      
         public List<Image> Images { get; set; }
 
-        [JsonIgnore]
+     
         public Categorie Categorie { get; set; }
      
 
