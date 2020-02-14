@@ -37,6 +37,7 @@ namespace Back.Controllers
         {
             DataContext dc = new DataContext();
             return Ok(dc.Manga.Include(c => c.Categorie).Include(i => i.Images).FirstOrDefault(x => x.Id == id));
+            //return Ok(dc.Manga.FirstOrDefault(x => x.Id == id));
         }
 
         [HttpGet("search/titre/{mot}")]
@@ -103,7 +104,7 @@ namespace Back.Controllers
         public IActionResult PutCover(int id, [FromForm] ImageType data)
         {
             DataContext dc = new DataContext();
-            Manga manga = dc.Manga.Include(c => c.Categorie).Include(i => i.Images).FirstOrDefault(x => x.Id == id);
+            Manga manga = dc.Manga.FirstOrDefault(x => x.Id == id);
             string img = Guid.NewGuid().ToString() + "-" + data.Image.FileName;
             //string pathToUploadCover = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"), "covers", img);
             string pathUploadCover = Path.Combine(_env.WebRootPath, "covers", img);
@@ -111,8 +112,10 @@ namespace Back.Controllers
             data.Image.CopyTo(stream);
             stream.Close();
             manga.UrlCover = "covers/" + img;
-            dc.SaveChanges();
-            return Ok(new { message = "image de couverture ajoutée" });
+            if (dc.SaveChanges() > 0)
+                return Ok(new { message = "image de couverture ajoutée", url = manga.UrlCover });
+            else
+                return Ok(new { message = "échec" });
         }
 
         //modification du manga
@@ -143,7 +146,7 @@ namespace Back.Controllers
         {
             DataContext dc = new DataContext();
             Image image = dc.Image.FirstOrDefault(i => i.Id == id);
-            if(image != null)
+            if (image != null)
             {
                 string pathImg = Guid.NewGuid().ToString() + "-" + data.Image.FileName;
                 string editImg = Path.Combine(_env.WebRootPath, "images", pathImg);
@@ -152,12 +155,12 @@ namespace Back.Controllers
                 stream.Close();
                 image.UrlImage = "images/" + pathImg;
                 dc.SaveChanges();
-                return Ok(new { message = "image modifiée"});
+                return Ok(new { message = "image modifiée" });
             }
             else
             {
                 return NotFound();
-            }           
+            }
         }
 
         [HttpDelete("{id}")]

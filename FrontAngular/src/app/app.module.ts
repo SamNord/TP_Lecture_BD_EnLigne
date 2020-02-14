@@ -1,18 +1,44 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AccueilComponent } from './accueil/accueil.component';
+import { MenuComponent } from './menu/menu.component';
+import { ApiService } from './api.service';
+import { AdminComponent } from './admin/admin.component';
+import { AddMangaComponent } from './add-manga/add-manga.component';
+import { FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { FormMangaComponent } from './form-manga/form-manga.component';
+import { HttpClientModule } from '@angular/common/http';
+
+
+const mesRoutes = [
+  {path : '', component : AppComponent },
+  {path : 'admin', component : AdminComponent },
+  {path : 'form', component : AddMangaComponent }
+]
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AccueilComponent,
+    MenuComponent,
+    AdminComponent,
+    AddMangaComponent,
+    FormMangaComponent
+ 
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RouterModule.forRoot(mesRoutes),
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule
+  
   ],
-  providers: [],
+  providers: [ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

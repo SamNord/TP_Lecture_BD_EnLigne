@@ -16,7 +16,7 @@ namespace Back.Models
         public string UrlImage { get => urlImage; set => urlImage = value; }
         public int MangaId { get => mangaId; set => mangaId = value; }
 
-        [JsonIgnore]
+   [JsonIgnore]
         public Manga Manga { get; set; }
 
         public Image()

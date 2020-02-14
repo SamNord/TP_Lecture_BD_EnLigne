@@ -14,7 +14,7 @@ namespace Back.Models
         public int Id { get => id; set => id = value; }
         public string Type { get => type; set => type = value; }
 
-       
+       [JsonIgnore]
         public List<Manga> Mangas { get; set; }
 
         public Categorie()
