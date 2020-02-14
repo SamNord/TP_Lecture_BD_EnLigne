@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class ApiService {
  urlBase = "http://localhost:60784/";
-
+obsGet : Subject<any> = new Subject<any>();
   constructor(private http : HttpClient) { }
 
   get = (url) => {

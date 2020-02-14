@@ -186,6 +186,7 @@ namespace Back.Controllers
             DataContext dc = new DataContext();
             return Ok(dc.Image.ToList());
         }
+
     }
 
     public class ImageType

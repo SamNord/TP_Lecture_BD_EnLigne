@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col">
+        <h1>Ajouter une catégorie</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-7">
+        <form>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Categorie</label>
+                <input type="text" [(ngModel)]="cat" name="cat" class="form-control" placeholder="catégorie" />
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary" (click)="RecupCat()">Ajouter Catégorie</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

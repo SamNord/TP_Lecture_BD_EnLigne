@@ -15,18 +15,23 @@ export class AddMangaComponent implements OnInit {
   id: any = undefined;
   cover: any;
   formData = new FormData();
+  categories: any;
 
   constructor(private api: ApiService) { }
 
   ngOnInit() {
+    this.api.obsGet.subscribe((value)=> {
+      // this.categories = value;
+      console.log(value)
+    })
   }
 
   UploadCover = (event) => {
- 
+
     // if (files.length === 0)
-      
-  return this.formData.append('image', event.target.files[0]);
- 
+
+    return this.formData.append('image', event.target.files[0]);
+
   }
 
   // Test = () => {
@@ -41,21 +46,21 @@ export class AddMangaComponent implements OnInit {
     this.api.post('Manga', livre).subscribe((event: any) => {
       console.log(event);
       this.id = event.numero;
-    if(event.numero >0) {
-      for (let l in livre) {
-        this.formData.append(l, livre[l]);
+      if (event.numero > 0) {
+        for (let l in livre) {
+          this.formData.append(l, livre[l]);
+        }
+        this.api.upload('Manga/upload/cover/' + event.numero, this.formData).subscribe((res: any) => {
+          if (res.url != null) {
+            alert(res.message)
+          }
+          else {
+            alert(res.message);
+          }
+        })
       }
-      this.api.upload('Manga/upload/cover/' + event.numero, this.formData).subscribe((res: any) => {
-      if(res.url != null) {
-        alert(res.message)
-      }
-      else {
-        alert(res.message);
-      }
-      })
-    }
-       
-  
     });
   }
+
+
 }

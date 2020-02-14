@@ -55,5 +55,36 @@ namespace Back.Controllers
                 return NotFound();
             }
         }
+
+
+        /*******************************************************
+         ******************Réinitialisation des données*********
+         * à tester sur postman**/
+        [HttpDelete("remove/manga")]
+        public IActionResult DeleteTables()
+        {
+            if (!Manga.DeleteTableManga())
+                return Ok(new { message = "table réinitialisée" });
+            else
+                return Ok(new { message = "échec" });
+        }
+
+        [HttpDelete("remove/image")]
+        public IActionResult DeleteTableImage()
+        {
+            if (!Manga.DeleteTableImage())
+                return Ok(new { message = "table réinitialisée" });
+            else
+                return Ok(new { message = "échec" });
+        }
+
+        [HttpDelete("remove/categorie")]
+        public IActionResult DeleteTableCat()
+        {
+            if (!Manga.DeleteTableCategorie())
+                return Ok(new { message = "table réinitialisée" });
+            else
+                return Ok(new { message = "échec" });
+        }
     }
 }
