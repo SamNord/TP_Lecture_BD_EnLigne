@@ -15,10 +15,10 @@ import { AddCategorieComponent } from './add-categorie/add-categorie.component';
 
 
 const mesRoutes = [
-  {path : '', component : AppComponent },
+  {path : '',   redirectTo : '/', pathMatch: 'full' },
   {path : 'admin', component : AdminComponent },
   {path : 'form', component : AddMangaComponent },
-  {path : 'cat', component : AddCategorieComponent }
+  {path : 'cate', component : AddCategorieComponent }
 ]
 
 @NgModule({

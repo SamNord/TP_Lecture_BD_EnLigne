@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import { HttpEventType } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-manga',
@@ -16,14 +17,21 @@ export class AddMangaComponent implements OnInit {
   cover: any;
   formData = new FormData();
   categories: any;
-
-  constructor(private api: ApiService) { }
+  catExist = false;
+  test;
+cat;
+  constructor(private api: ApiService, private router: Router) { }
 
   ngOnInit() {
-    this.api.obsGet.subscribe((value)=> {
-      // this.categories = value;
-      console.log(value)
+    this.api.get('categorie').subscribe((res: any) => {
+      console.log(res);
+      this.categories = res;
+      if(res.length > 0) {
+        this.catExist = true;
+      }
+      // this.api.obsGet.next(res);
     })
+    console.log(this.test)
   }
 
   UploadCover = (event) => {
@@ -39,7 +47,7 @@ export class AddMangaComponent implements OnInit {
   // }
 
   Add = () => {
-    const livre = { Titre: this.titre, Auteur: this.auteur, Texte: this.texte, Categorie: this.categorie };
+    const livre = { Titre: this.titre, Auteur: this.auteur, Texte: this.texte, Categorie: this.cat };
 
 
     // console.log(this.formData);
@@ -61,6 +69,13 @@ export class AddMangaComponent implements OnInit {
       }
     });
   }
+
+  addMyCategory = () => {
+    this.router.navigate(['cate']);
+  }
+
+
+
 
 
 }

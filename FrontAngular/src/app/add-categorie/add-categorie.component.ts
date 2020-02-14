@@ -10,9 +10,17 @@ export class AddCategorieComponent implements OnInit {
   cat;
   id: any = undefined;
   toDelete = false;
+  caty: any;
   constructor(private api: ApiService) { }
-
+categorie;
   ngOnInit() {
+    this.api.get('categorie').subscribe((res: any) => {
+      console.log(res);
+      this.caty = res;
+      // this.api.obsGet.next(res);
+    })
+
+ 
   }
 
   AddCat = () => {
@@ -25,7 +33,8 @@ export class AddCategorieComponent implements OnInit {
   RecupCat = () => {
     this.api.get('categorie').subscribe((res: any) => {
       console.log(res);
-      this.api.obsGet.next(res);
+      this.caty = res;
+      // this.api.obsGet.next(res);
     })
   }
 
