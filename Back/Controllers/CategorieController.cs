@@ -16,6 +16,8 @@ namespace Back.Controllers
     [ApiController]
     public class CategorieController : ControllerBase
     {
+        /****************************************************************
+        ************************Liste de otutes les catégories*******/
         [HttpGet]
         public IActionResult Get()
         {
@@ -23,6 +25,8 @@ namespace Back.Controllers
             return Ok(dc.Categorie.Include(m => m.Mangas).ToList());
         }
 
+        /****************************************************************
+        ************************Récupérer une catégorie par son id*******/
         [HttpGet("{id}")]
         public IActionResult GetCat(int id)
         {
@@ -30,25 +34,42 @@ namespace Back.Controllers
             return Ok(dc.Categorie.Include(m => m.Mangas).FirstOrDefault(c => c.Id == id));
         }
 
-        [HttpPost]
+        /****************************************************************
+       ************************Rechercher une catégorie par son type*******/
+        [HttpGet("search/{type}")]
+        public IActionResult SearchCat(string type)
+        {
+            DataContext dc = new DataContext();
+            return Ok(dc.Categorie.Include(m => m.Mangas).FirstOrDefault(c => c.Type == type));
+        }
+
+        /****************************************************************
+        ************************Ajouter une catégorie******************/
+        [HttpPost("Add")]
         public IActionResult Post([FromBody] Categorie categorie)
         {
             DataContext dc = new DataContext();
             dc.Add(categorie);
-            dc.SaveChanges();
-            return Ok(new { message = "catégorie ajoutée", catId = categorie.Id });
+            if (dc.SaveChanges() > 0)
+                return Ok(new { message = "catégorie ajoutée", catId = categorie.Id });
+            else
+                return Ok(new { message = "erreur" });
         }
 
-        [HttpDelete("{id}")]
+        /****************************************************************
+         ************************Supprimer une catégorie******************/
+        [HttpDelete("delete/{id}")]
         public IActionResult Delete(int id)
         {
             DataContext dc = new DataContext();
             Categorie cat = dc.Categorie.FirstOrDefault(c => c.Id == id);
-            if(cat != null)
+            if (cat != null)
             {
                 dc.Categorie.Remove(cat);
-                dc.SaveChanges();
+                if(dc.SaveChanges() >0)
                 return Ok(new { message = "catégorie supprimée" });
+                else
+                    return Ok(new { message = "erreur" });
             }
             else
             {
@@ -56,6 +77,9 @@ namespace Back.Controllers
             }
         }
 
+
+        ///////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
 
         /*******************************************************
          ******************Réinitialisation des données*********

@@ -30,4 +30,9 @@ return this.http.get(this.urlBase + url);
     });
     return this.http.put(this.urlBase +  url, formdata, { headers: headers});
   }
+
+  delete = (url) => {
+
+    return this.http.delete(this.urlBase + url )
+  }
 }

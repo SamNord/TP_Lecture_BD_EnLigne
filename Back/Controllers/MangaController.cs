@@ -75,8 +75,11 @@ namespace Back.Controllers
         {
             DataContext dc = new DataContext();
             dc.Add(manga);
-            dc.SaveChanges();
+            if(dc.SaveChanges() >0)
             return Ok(new { message = "manga ajouté", numero = manga.Id });
+            else
+                return Ok(new { message = "erreur" });
+
         }
 
         [HttpPut("upload/image/{id}")]
