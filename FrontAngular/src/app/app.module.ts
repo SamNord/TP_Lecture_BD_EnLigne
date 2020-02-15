@@ -12,13 +12,15 @@ import { FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { FormMangaComponent } from './form-manga/form-manga.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AddCategorieComponent } from './add-categorie/add-categorie.component';
+import { MangasComponent } from './mangas/mangas.component';
 
 
 const mesRoutes = [
   {path : '',   redirectTo : '/', pathMatch: 'full' },
   {path : 'admin', component : AdminComponent },
   {path : 'form', component : AddMangaComponent },
-  {path : 'cate', component : AddCategorieComponent }
+  {path : 'cate', component : AddCategorieComponent },
+  {path : 'liste', component : MangasComponent }
 ]
 
 @NgModule({
@@ -29,7 +31,8 @@ const mesRoutes = [
     AdminComponent,
     AddMangaComponent,
     FormMangaComponent,
-    AddCategorieComponent
+    AddCategorieComponent,
+    MangasComponent
  
   ],
   imports: [

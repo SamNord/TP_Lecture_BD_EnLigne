@@ -114,7 +114,8 @@ namespace Back.Controllers
             FileStream stream = System.IO.File.Create(pathUploadCover);
             data.Image.CopyTo(stream);
             stream.Close();
-            manga.UrlCover = "covers/" + img;
+            string cover = "covers/" + img;
+            manga.UrlCover = $"{Request.Scheme}://{Request.Host.Value}/{cover}";
             if (dc.SaveChanges() > 0)
                 return Ok(new { message = "image de couverture ajoutée", url = manga.UrlCover });
             else

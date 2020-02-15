@@ -12,6 +12,16 @@ obsGet : Subject<any> = new Subject<any>();
 return this.http.get(this.urlBase + url);
   }
 
+  
+  // getAll = (url, data) => {
+  //   const headers = new HttpHeaders({
+    
+  //     "Accept": "application/json"
+ 
+  //   });
+  //   return this.http.get(this.urlBase + url, {headers : headers});
+  //     }
+
   post = (url, data) => {
     const headers = new HttpHeaders({
     
