@@ -5,7 +5,8 @@ import { Subject } from 'rxjs';
 @Injectable()
 export class ApiService {
  urlBase = "http://localhost:60784/";
-obsGet : Subject<any> = new Subject<any>();
+ observableAddImages : Subject<any> = new Subject<any>();
+ observableFavoris : Subject<any> = new Subject<any>();
   constructor(private http : HttpClient) { }
 
   get = (url) => {

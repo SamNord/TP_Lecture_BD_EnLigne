@@ -13,6 +13,9 @@ import { AddCategorieComponent } from './add-categorie/add-categorie.component';
 import { MangasComponent } from './mangas/mangas.component';
 import { SearchComponent } from './search/search.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { DetailComponent } from './detail/detail.component';
+import { AddImagesComponent } from './add-images/add-images.component';
+import { FavorisComponent } from './favoris/favoris.component';
 
 
 const mesRoutes = [
@@ -21,7 +24,10 @@ const mesRoutes = [
   {path : 'form', component : AddMangaComponent },
   {path : 'cate', component : AddCategorieComponent },
   {path : 'liste', component : MangasComponent },
-  {path : 'search', component : SearchComponent }
+  {path : 'search', component : SearchComponent },
+  {path : 'formImages', component : AddImagesComponent },
+  {path : 'favoris', component : FavorisComponent },
+  {path : 'detail/:id', component : DetailComponent }
 ]
 
 @NgModule({
@@ -33,7 +39,10 @@ const mesRoutes = [
     AddCategorieComponent,
     MangasComponent,
     SearchComponent,
-    SidebarComponent
+    SidebarComponent,
+    DetailComponent,
+    AddImagesComponent,
+    FavorisComponent
  
   ],
   imports: [

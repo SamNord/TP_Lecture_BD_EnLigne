@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-10 offset-1">
+        <div class="row mt-5 mb-3 cadre">
+            <div class="col-8">
+                <div class="row">
+                    <div class="col mt-3">
+                        <p>Titre : {{ titre }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p>Auteur : {{ auteur }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p> {{ texte }}</p>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4">
+                        <button class="btn btn-primary" (click)="Read()">Lecture Manga</button>
+                    </div>
+                    <div class="col-4">
+                        <button class="btn btn-success" (click)="AddToFavoris(numero)">Ajouter aux favoris</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <img class="m-3 cover" src="{{ cover }}" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row" *ngIf = "isReading">
+    <div class="col-9 offset-2 border">
+        <div class="row" *ngFor="let i of images">
+            <div class="col-5 offset-3">
+                <img src="{{ i.urlImage }}" alt="" class="img">
+            </div>
+        </div>
+    </div>
+</div>

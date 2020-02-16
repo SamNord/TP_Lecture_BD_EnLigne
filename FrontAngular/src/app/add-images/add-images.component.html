@@ -1,0 +1,15 @@
+<div class="row mt-5">
+    <div class="col-5 offset-3">
+        <form>
+            <div class="form-group">
+                <input class="form-control" [(ngModel)]="num" name="num" type="number"
+                    placeholder="entrez le numéro du manga">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="file" (change)="UploadImg($event)">
+            </div>
+            <button type="submit" class="btn btn-warning" (click)="AddImage($event)">Ajouter</button>
+        </form>
+    </div>
+
+</div>

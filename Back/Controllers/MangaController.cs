@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Back.Controllers
 {
@@ -18,6 +19,7 @@ namespace Back.Controllers
     [ApiController]
     public class MangaController : ControllerBase
     {
+        /***************Service pour récupérer le chemin du fichier(image) à ajouter****/
         private IHostingEnvironment _env;
 
         public MangaController(IHostingEnvironment env)
@@ -25,6 +27,9 @@ namespace Back.Controllers
             _env = env;
         }
 
+
+        /*************************************************************
+         ********************Liste des mangas************************/
         [HttpGet]
         public IActionResult Get()
         {
@@ -32,6 +37,8 @@ namespace Back.Controllers
             return Ok(dc.Manga.Include(c => c.Categorie).Include(i => i.Images).ToList());
         }
 
+        /*************************************************************
+        ********************Rechercher manga par son id***************/
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -40,6 +47,8 @@ namespace Back.Controllers
             //return Ok(dc.Manga.FirstOrDefault(x => x.Id == id));
         }
 
+        /*************************************************************
+        ********************Recherche par titre************************/
         [HttpGet("search/titre/{mot}")]
         public IActionResult SearchByTitle(string mot)
         {
@@ -55,6 +64,8 @@ namespace Back.Controllers
             }
         }
 
+        /*************************************************************
+         ********************Recherche par auteur********************/
         [HttpGet("search/auteur/{mot}")]
         public IActionResult SearchByAuteur(string mot)
         {
@@ -70,6 +81,8 @@ namespace Back.Controllers
             }
         }
 
+        /*************************************************************
+         ********************Recherche par titre ou auteur************/
         [HttpGet("search/{mot}")]
         public IActionResult Search(string mot)
         {
@@ -85,6 +98,8 @@ namespace Back.Controllers
             }
         }
 
+        /*************************************************************
+        *****************Ajout du manga : partie 1(données en json*****/
         [HttpPost]
         public IActionResult Post([FromBody] Manga manga)
         {
@@ -94,15 +109,16 @@ namespace Back.Controllers
             return Ok(new { message = "manga ajouté", numero = manga.Id });
             else
                 return Ok(new { message = "erreur" });
-
         }
 
+        /*************************************************************
+        ******************************Ajout de l'image ****************/
         [HttpPut("upload/image/{id}")]
         public IActionResult PutImage(int id, [FromForm] ImageType data)
         {
             DataContext dc = new DataContext();
             Manga manga = dc.Manga.Include(c => c.Categorie).Include(i => i.Images).FirstOrDefault(x => x.Id == id);
-
+            List<Image> listeImages = new List<Image>();
             string img = Guid.NewGuid().ToString() + "-" + data.Image.FileName;
             //string pathToUploadImg = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"), "images", img);
             string pathUploadImg = Path.Combine(_env.WebRootPath, "images", img);
@@ -110,14 +126,21 @@ namespace Back.Controllers
             data.Image.CopyTo(stream);
             stream.Close();
             Image image = new Image();
-            image.UrlImage = "images/" + img;
+            string pathImg = "images/" + img;
+            image.UrlImage = $"{Request.Scheme}://{Request.Host.Value}/{pathImg}";
             image.MangaId = id;
             dc.Image.Add(image);
-            dc.SaveChanges();
-            return Ok(new { message = "image ajoutée" });
+            listeImages.Add(image);
+            manga.Images = listeImages;
+            if (dc.SaveChanges() > 0)
+                return Ok(new { message = "image ajoutée", imageId = image.Id });
+            else
+                return Ok(new { message = "l'image n'a pas pu être ajoutée" });
 
         }
 
+        /*************************************************************
+        ******************************Ajout de la couverture *********/
         [HttpPut("upload/cover/{id}")]
         public IActionResult PutCover(int id, [FromForm] ImageType data)
         {
@@ -137,7 +160,8 @@ namespace Back.Controllers
                 return Ok(new { message = "échec" });
         }
 
-        //modification du manga
+        /*************************************************************
+        ******************************Modification du manga **********/
         [HttpPut("update/{id}")]
         public IActionResult Update(int id, [FromBody] Manga mangaEdit)
         {
@@ -160,6 +184,8 @@ namespace Back.Controllers
             }
         }
 
+        /*************************************************************
+        ******************************Modification de l'image ********/
         [HttpPut("update/image/{id}")]
         public IActionResult UpdateImage(int id, [FromForm] ImageType data)
         {
@@ -182,6 +208,8 @@ namespace Back.Controllers
             }
         }
 
+        /*************************************************************
+        ******************************Suppression du manga ***********/
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -199,15 +227,85 @@ namespace Back.Controllers
             }
         }
 
-        [HttpGet("getImage")]
-        public IActionResult GetImage()
+        /*************************************************************
+        ******************************Liste des images **************/
+        [HttpGet("getImage/{id}")]
+        public IActionResult GetImage(int id)
         {
             DataContext dc = new DataContext();
-            return Ok(dc.Image.ToList());
+            Manga manga = dc.Manga.Include(c => c.Categorie).Include(i => i.Images).FirstOrDefault(x => x.Id == id);
+            if(manga != null)
+            {
+                List<Image> listImages = dc.Image.Include(m => m.Manga).Where(x => x.MangaId == id).ToList();
+                if (listImages.Count > 0)
+                    return Ok(listImages);
+                else
+                    return Ok(new { message = "pas d'images dans ce manga" });
+            }
+           
+            else
+            {
+                return NotFound();
+            }
         }
 
+        /************************************************************
+         **********************Ajouter aux favoris*****************/
+        [HttpGet("add/favoris/{id}")]
+        public IActionResult AddFavoris(int id)
+        {
+            DataContext dc = new DataContext();
+            Manga manga = dc.Manga.Include(c => c.Categorie).Include(i => i.Images).FirstOrDefault(x => x.Id == id);
+            string json = HttpContext.Session.GetString("favoris");
+            List<Manga> liste = (json != null) ? JsonConvert.DeserializeObject<List<Manga>>(json) : new List<Manga>();
+            if(!VerifFavoris(id))
+            {
+                liste.Add(manga);
+                HttpContext.Session.SetString("favoris", JsonConvert.SerializeObject(liste));
+                return Ok(liste);
+            }
+            else
+            return Ok(new { message = "manga déjà dans les favoris"});
+        }
+
+        /************************************************************
+        **************Retirer des favoris ***************************/
+        [HttpGet("remove/favoris/{id}")]
+        public IActionResult RemoveFavoris(int id)
+        {
+            DataContext dc = new DataContext();
+            Manga manga = dc.Manga.Include(c => c.Categorie).Include(i => i.Images).FirstOrDefault(x => x.Id == id);
+            string json = HttpContext.Session.GetString("favoris");
+            List<Manga> liste = (json != null) ? JsonConvert.DeserializeObject<List<Manga>>(json) : new List<Manga>();
+            if (VerifFavoris(id))
+            {
+                liste.Remove(manga);
+                HttpContext.Session.SetString("favoris", JsonConvert.SerializeObject(liste));
+                return Ok(new { message = "manga retiré des favoris"});
+            }
+            else
+                return Ok(new { message = "le manga n'est pas dans les favoris" });
+        }
+
+        /********Méthode qui renvoie true si on trouve le même manga dans la liste des favoris */
+        private bool VerifFavoris(int id)
+        {
+            string jsonFavoris = HttpContext.Session.GetString("favoris");
+            List<Manga> favoris = (jsonFavoris != null) ? JsonConvert.DeserializeObject<List<Manga>>(jsonFavoris) : new List<Manga>();
+            bool found = false;
+            favoris.ForEach(a =>
+            {
+                if (a.Id == id)
+                {
+                    found = true;
+                }
+            });
+            return found;
+        }
     }
 
+
+    /***************Class pour uploader les images et le cover**********/
     public class ImageType
     {
         private string titreEdit;

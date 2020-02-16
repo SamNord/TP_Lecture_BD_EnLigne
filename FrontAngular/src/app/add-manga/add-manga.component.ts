@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import { HttpEventType } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-add-manga',
@@ -22,6 +23,7 @@ export class AddMangaComponent implements OnInit {
   isAddManga = false;
   cat;
   testCat;
+
   constructor(private api: ApiService, private router: Router) { }
 
   ngOnInit() {
@@ -31,16 +33,11 @@ export class AddMangaComponent implements OnInit {
       if (res.length > 0) {
         this.catExist = true;
       }
-
     })
-
   }
 
   UploadCover = (event) => {
-
-
     return this.formData.append('image', event.target.files[0]);
-
   }
 
   Add = () => {
@@ -51,6 +48,7 @@ export class AddMangaComponent implements OnInit {
       this.api.post('Manga', livre).subscribe((event: any) => {
         console.log(event);
         this.id = event.numero;
+        this.api.observableAddImages.next(event.numero);
         if (event.numero > 0) {
           for (let l in livre) {
             this.formData.append(l, livre[l]);
@@ -58,6 +56,13 @@ export class AddMangaComponent implements OnInit {
           this.api.upload('Manga/upload/cover/' + event.numero, this.formData).subscribe((res: any) => {
             if (res.url != null) {
               alert(event.message)
+              let reponse = prompt("Voulez vous ajouter des images ? Y/N");
+              if (reponse == "Y") {
+                this.router.navigate(['formImages']);
+              }
+              else {
+                this.router.navigate(['liste']);
+              }
             }
             else {
               alert(res.message);
@@ -69,9 +74,6 @@ export class AddMangaComponent implements OnInit {
         }
       });
     })
- 
-
-
   }
 
   addMyCategory = () => {
@@ -85,9 +87,5 @@ export class AddMangaComponent implements OnInit {
   AjouterManga = () => {
     this.isAddManga = true;
   }
-
-
-
-
 
 }
