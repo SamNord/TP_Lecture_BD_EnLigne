@@ -1,0 +1,30 @@
+<div class="row m-5">
+    <div class="col-7">
+        <form class="row">
+            <div class="form-group col-5">
+                <input type="text" [(ngModel)]="titre" name="titre" class="form-control" placeholder="titre du manga" />
+            </div>
+            <div class="form-group col-5">
+                <input type="text" [(ngModel)]="auteur" name="auteur" class="form-control"
+                    placeholder="auteur du manga" />
+            </div>
+
+            <div class="col-2">
+                <button type="submit" class="btn btn-success b1" (click)="Search()">Rechercher</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="row m-3 list"> 
+            <div class="col-2 m-4 p-1" *ngFor = 'let manga of mangas'>
+                <div class="card" style="width: 13rem;">
+                   <img src="{{manga.urlCover}}" class="card-img-top cov" alt="...">
+                    <a href="#" class="btn stretched-link">{{ manga.titre }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -49,4 +49,8 @@ export class AddCategorieComponent implements OnInit {
       })      
   }
 
+  Retour = () => {
+    this.router.navigate(["form"]);
+  }
+
 }

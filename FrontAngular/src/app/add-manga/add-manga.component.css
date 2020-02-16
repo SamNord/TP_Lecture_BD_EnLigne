@@ -1,10 +1,31 @@
-.boutonCat {
+.bouton {
     width: 350px;
     padding: 15px;    
+    opacity: 0.8;
+    background-image: url("../../assets/images/fond_menu.jpg");
+    color: yellow;
+    font-weight: bold;
+    font-size: 21px;
 }
 
 
-.boutonManga {
-    width: 350px;
-    padding: 15px;
+ .survol :hover {    
+    color: purple;
+    font-weight: bold;
+    font-size: 21px;
+ background-image: url("../../assets/images/fond6.jpg");
+    /* background-image: url("../../assets/images/fond4.jpg"); */
+}
+
+div label {
+    color: white
+}
+
+.boutCat {
+    opacity: 0.7;
+}
+
+input, textarea {
+    opacity: 0.7;
+  
 }

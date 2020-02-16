@@ -1,10 +1,10 @@
-<div class="row m-5">
+<!-- <div class="row m-5">
     <div class="col">
         <h1>Ajouter une catégorie</h1>
     </div>
-</div>
+</div> -->
 
-<div class="row">
+<div class="row m-5">
     <div class="col-5">
         <form>
             <div class="form-group">
@@ -13,25 +13,30 @@
 
             <div class="row">
                 <div class="col">
-                    <button type="submit" class="btn btn-danger" (click)="AddCat()">Ajouter</button>
+                    <button type="submit" class="btn btn-danger b1" (click)="AddCat()">Ajouter</button>
                 </div>
             </div>
 
         </form>
     </div>
-    <div class="col-5 offset-1 scroll">
-        <div class="list-group m-2" *ngFor = "let c of listCat">
-            <a href="#" class="list-group-item list-group-item-action list-group-item-success active">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1"> Catégorie n° {{c.id}}</h5>      
-                    <small> 
-                        <button class="btn btn-dark">Modifier</button>
-                        <button class="btn btn-danger" (click)= "deleteCat(c.id)">Supprimer</button>
-                    </small>           
-                           
-                </div>
-                <p class="mb-1">Type : {{ c.type }}</p>
-            </a>
-        </div>
+    <div class="col-3 offset-4">
+        <button class="btn btn-primary b1" (click)="Retour()">Retour</button>
     </div>
+</div>
+<div class="row">
+
+    <div class="list-group m-2 col-5 offset-1" *ngFor="let c of listCat">
+        <a href="#" class="list-group-item list-group-item-action list-group-item-success active">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1"> Catégorie n° {{c.id}}</h5>
+                <small>
+                    <button class="btn btn-dark">Modifier</button>
+                    <button class="btn btn-danger" (click)="deleteCat(c.id)">Supprimer</button>
+                </small>
+
+            </div>
+            <p class="mb-1">Type : {{ c.type }}</p>
+        </a>
+    </div>
+
 </div>

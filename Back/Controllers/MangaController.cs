@@ -70,6 +70,21 @@ namespace Back.Controllers
             }
         }
 
+        [HttpGet("search/{mot}")]
+        public IActionResult Search(string mot)
+        {
+            DataContext dc = new DataContext();
+            List<Manga> listeMangas = dc.Manga.Include(c => c.Categorie).Include(i => i.Images).Where(x => x.Auteur == mot || x.Titre == mot).ToList();
+            if (listeMangas.Count > 0)
+            {
+                return Ok(listeMangas);
+            }
+            else
+            {
+                return Ok(new { message = "pas de mangas correspondant à votre recherche" });
+            }
+        }
+
         [HttpPost]
         public IActionResult Post([FromBody] Manga manga)
         {

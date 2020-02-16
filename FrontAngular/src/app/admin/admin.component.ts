@@ -20,10 +20,9 @@ export class AdminComponent implements OnInit {
     if (this.identifiant == "admin" && this.password == "admin") {
       this.router.navigate(['form']);
     }
-    else {
-      this.router.navigate(['admin']);
-    }
-
+      else  {
+        alert("identifiant ou mot de pass incorrect");
+      }
   }
 
 }
