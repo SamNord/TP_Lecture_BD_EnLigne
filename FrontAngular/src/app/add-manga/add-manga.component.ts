@@ -44,33 +44,33 @@ export class AddMangaComponent implements OnInit {
   }
 
   Add = () => {
-  
 
-    const livre = { Titre: this.titre, Auteur: this.auteur, Texte: this.texte, CategorieId: 2 };
+    this.api.get('categorie/search/' + this.cat).subscribe((res: any) => {
+      const livre = { Titre: this.titre, Auteur: this.auteur, Texte: this.texte, CategorieId: res.id };
 
-    this.api.post('Manga', livre).subscribe((event: any) => {
-      console.log(event);
-      this.id = event.numero;
-      if (event.numero > 0) {
-        for (let l in livre) {
-          this.formData.append(l, livre[l]);
+      this.api.post('Manga', livre).subscribe((event: any) => {
+        console.log(event);
+        this.id = event.numero;
+        if (event.numero > 0) {
+          for (let l in livre) {
+            this.formData.append(l, livre[l]);
+          }
+          this.api.upload('Manga/upload/cover/' + event.numero, this.formData).subscribe((res: any) => {
+            if (res.url != null) {
+              alert(event.message)
+            }
+            else {
+              alert(res.message);
+            }
+          })
         }
-        this.api.upload('Manga/upload/cover/' + event.numero, this.formData).subscribe((res: any) => {
-          if (res.url != null) {
-            alert(event.message)
-          }
-          else {
-            alert(res.message);
-          }
-        })
-      }
-      else {
-        alert(event.message);
-      }
-    });
+        else {
+          alert(event.message);
+        }
+      });
+    })
+ 
 
-
-    // console.log(this.formData);
 
   }
 

@@ -8,16 +8,21 @@ import { ApiService } from '../api.service';
 })
 export class SearchComponent implements OnInit {
   mangas: any;
-  titre;
-  auteur;
+  mot;
+  valueOption;
+
+
   constructor(private api: ApiService) { }
 
   ngOnInit() {
+
   }
 
+
   Search = () => {
-    if (this.titre != null) {
-      this.api.get('manga/search/titre/' + this.titre).subscribe((res: any) => {
+
+    if (this.valueOption == "Titre") {
+      this.api.get('manga/search/titre/' + this.mot).subscribe((res: any) => {
         if (res.length > 0) {
           this.mangas = res;
         }
@@ -26,8 +31,8 @@ export class SearchComponent implements OnInit {
         }
       })
     }
-    else if(this.auteur != null) {
-      this.api.get('manga/search/auteur/' + this.titre).subscribe((response: any) => {
+    else if (this.valueOption == "Auteur") {
+      this.api.get('manga/search/auteur/' + this.mot).subscribe((response: any) => {
         if (response.length > 0) {
           this.mangas = response;
         }

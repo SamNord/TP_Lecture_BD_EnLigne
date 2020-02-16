@@ -2,11 +2,14 @@
     <div class="col-7">
         <form class="row">
             <div class="form-group col-5">
-                <input type="text" [(ngModel)]="titre" name="titre" class="form-control" placeholder="titre du manga" />
+                <select [(ngModel)]="valueOption" name="valueOption"  class="form-control">
+                    <option>Titre</option>
+                    <option>Auteur</option>
+                </select>
             </div>
             <div class="form-group col-5">
-                <input type="text" [(ngModel)]="auteur" name="auteur" class="form-control"
-                    placeholder="auteur du manga" />
+                <input type="text" [(ngModel)]="mot" name="mot" class="form-control"
+                    placeholder="tapez votre recherche" />
             </div>
 
             <div class="col-2">
