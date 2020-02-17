@@ -17,6 +17,8 @@ import { DetailComponent } from './detail/detail.component';
 import { AddImagesComponent } from './add-images/add-images.component';
 import { FavorisComponent } from './favoris/favoris.component';
 
+import { TestEditorComponent } from './test-editor/test-editor.component';
+
 
 const mesRoutes = [
   {path : '',   redirectTo : '/', pathMatch: 'full' },
@@ -29,7 +31,8 @@ const mesRoutes = [
   {path : 'formImages', component : AddImagesComponent },
   {path : 'updateImage/:id', component : AddImagesComponent },
   {path : 'favoris', component : FavorisComponent },
-  {path : 'detail/:id', component : DetailComponent }
+  {path : 'detail/:id', component : DetailComponent },
+  {path : 'test', component : TestEditorComponent }
 ]
 
 @NgModule({
@@ -44,7 +47,9 @@ const mesRoutes = [
     SidebarComponent,
     DetailComponent,
     AddImagesComponent,
-    FavorisComponent
+    FavorisComponent,
+
+    TestEditorComponent
  
   ],
   imports: [
@@ -53,7 +58,8 @@ const mesRoutes = [
     RouterModule.forRoot(mesRoutes),
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+
   
   ],
   providers: [ApiService],
