@@ -22,10 +22,12 @@ const mesRoutes = [
   {path : '',   redirectTo : '/', pathMatch: 'full' },
   {path : 'admin', component : AdminComponent },
   {path : 'form', component : AddMangaComponent },
+  {path : 'update/:id', component : AddMangaComponent },
   {path : 'cate', component : AddCategorieComponent },
   {path : 'liste', component : MangasComponent },
   {path : 'search', component : SearchComponent },
   {path : 'formImages', component : AddImagesComponent },
+  {path : 'updateImage/:id', component : AddImagesComponent },
   {path : 'favoris', component : FavorisComponent },
   {path : 'detail/:id', component : DetailComponent }
 ]

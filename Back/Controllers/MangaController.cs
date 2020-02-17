@@ -105,8 +105,8 @@ namespace Back.Controllers
         {
             DataContext dc = new DataContext();
             dc.Add(manga);
-            if(dc.SaveChanges() >0)
-            return Ok(new { message = "manga ajouté", numero = manga.Id });
+            if (dc.SaveChanges() > 0)
+                return Ok(new { message = "manga ajouté", numero = manga.Id });
             else
                 return Ok(new { message = "erreur" });
         }
@@ -119,6 +119,7 @@ namespace Back.Controllers
             DataContext dc = new DataContext();
             Manga manga = dc.Manga.Include(c => c.Categorie).Include(i => i.Images).FirstOrDefault(x => x.Id == id);
             List<Image> listeImages = new List<Image>();
+            listeImages.AddRange(manga.Images);
             string img = Guid.NewGuid().ToString() + "-" + data.Image.FileName;
             //string pathToUploadImg = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"), "images", img);
             string pathUploadImg = Path.Combine(_env.WebRootPath, "images", img);
@@ -133,7 +134,7 @@ namespace Back.Controllers
             listeImages.Add(image);
             manga.Images = listeImages;
             if (dc.SaveChanges() > 0)
-                return Ok(new { message = "image ajoutée", imageId = image.Id });
+                return Ok(new { message = "image ajoutée", imageId = image.Id, liste = manga.Images });
             else
                 return Ok(new { message = "l'image n'a pas pu être ajoutée" });
 
@@ -145,7 +146,7 @@ namespace Back.Controllers
         public IActionResult PutCover(int id, [FromForm] ImageType data)
         {
             DataContext dc = new DataContext();
-            Manga manga = dc.Manga.FirstOrDefault(x => x.Id == id);
+            Manga manga = dc.Manga.Include(c => c.Categorie).Include(i => i.Images).FirstOrDefault(x => x.Id == id);           
             string img = Guid.NewGuid().ToString() + "-" + data.Image.FileName;
             //string pathToUploadCover = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"), "covers", img);
             string pathUploadCover = Path.Combine(_env.WebRootPath, "covers", img);
@@ -154,6 +155,7 @@ namespace Back.Controllers
             stream.Close();
             string cover = "covers/" + img;
             manga.UrlCover = $"{Request.Scheme}://{Request.Host.Value}/{cover}";
+            dc.SaveChanges();
             if (dc.SaveChanges() > 0)
                 return Ok(new { message = "image de couverture ajoutée", url = manga.UrlCover });
             else
@@ -176,7 +178,33 @@ namespace Back.Controllers
                 manga.Texte = mangaEdit.Texte;
                 manga.CategorieId = mangaEdit.CategorieId;
                 dc.SaveChanges();
-                return Ok(new { message = "manga mis à jour" });
+                return Ok(new { message = "manga mis à jour", idManga = manga.Id });
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        /*************************************************************
+       ******************************Modification de la couverture ****/
+        [HttpPut("update/cover/{id}")]
+        public IActionResult UpdateCover(int id, [FromForm] ImageType data)
+        {
+            DataContext dc = new DataContext();
+            Manga manga = dc.Manga.Include(c => c.Categorie).Include(i => i.Images).FirstOrDefault(x => x.Id == id);
+            if (manga != null)
+            {
+                manga.UrlCover = "";
+                string pathCover = Guid.NewGuid().ToString() + "-" + data.Image.FileName;
+                string editImg = Path.Combine(_env.WebRootPath, "covers", pathCover);
+                FileStream stream = System.IO.File.Create(editImg);
+                data.Image.CopyTo(stream);
+                stream.Close();
+                string cover = "covers/" + pathCover;
+                manga.UrlCover = $"{Request.Scheme}://{Request.Host.Value}/{cover}";
+                dc.SaveChanges();
+                return Ok(new { message = "couverture modifiée" });
             }
             else
             {
@@ -193,6 +221,7 @@ namespace Back.Controllers
             Image image = dc.Image.FirstOrDefault(i => i.Id == id);
             if (image != null)
             {
+                Manga manga = dc.Manga.Include(c => c.Categorie).Include(i => i.Images).FirstOrDefault(x => x.Id == image.MangaId);
                 string pathImg = Guid.NewGuid().ToString() + "-" + data.Image.FileName;
                 string editImg = Path.Combine(_env.WebRootPath, "images", pathImg);
                 FileStream stream = System.IO.File.Create(editImg);
@@ -210,7 +239,7 @@ namespace Back.Controllers
 
         /*************************************************************
         ******************************Suppression du manga ***********/
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public IActionResult Delete(int id)
         {
             DataContext dc = new DataContext();
@@ -220,6 +249,10 @@ namespace Back.Controllers
                 dc.Remove(manga);
                 dc.SaveChanges();
                 return Ok(new { message = "manga supprimé", numero = manga.Id });
+                //if (dc.SaveChanges() > 0)
+                //    return Ok(new { message = "manga supprimé", numero = manga.Id });
+                //else
+                //    return Ok(new { message = "erreur de suppression" });
             }
             else
             {
@@ -234,7 +267,7 @@ namespace Back.Controllers
         {
             DataContext dc = new DataContext();
             Manga manga = dc.Manga.Include(c => c.Categorie).Include(i => i.Images).FirstOrDefault(x => x.Id == id);
-            if(manga != null)
+            if (manga != null)
             {
                 List<Image> listImages = dc.Image.Include(m => m.Manga).Where(x => x.MangaId == id).ToList();
                 if (listImages.Count > 0)
@@ -242,7 +275,7 @@ namespace Back.Controllers
                 else
                     return Ok(new { message = "pas d'images dans ce manga" });
             }
-           
+
             else
             {
                 return NotFound();
@@ -258,14 +291,14 @@ namespace Back.Controllers
             Manga manga = dc.Manga.Include(c => c.Categorie).Include(i => i.Images).FirstOrDefault(x => x.Id == id);
             string json = HttpContext.Session.GetString("favoris");
             List<Manga> liste = (json != null) ? JsonConvert.DeserializeObject<List<Manga>>(json) : new List<Manga>();
-            if(!VerifFavoris(id))
+            if (!VerifFavoris(id))
             {
                 liste.Add(manga);
                 HttpContext.Session.SetString("favoris", JsonConvert.SerializeObject(liste));
                 return Ok(liste);
             }
             else
-            return Ok(new { message = "manga déjà dans les favoris"});
+                return Ok(new { message = "manga déjà dans les favoris" });
         }
 
         /************************************************************
@@ -281,7 +314,7 @@ namespace Back.Controllers
             {
                 liste.Remove(manga);
                 HttpContext.Session.SetString("favoris", JsonConvert.SerializeObject(liste));
-                return Ok(new { message = "manga retiré des favoris"});
+                return Ok(new { message = "manga retiré des favoris" });
             }
             else
                 return Ok(new { message = "le manga n'est pas dans les favoris" });

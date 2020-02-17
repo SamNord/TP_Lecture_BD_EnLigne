@@ -7,21 +7,19 @@ export class ApiService {
  urlBase = "http://localhost:60784/";
  observableAddImages : Subject<any> = new Subject<any>();
  observableFavoris : Subject<any> = new Subject<any>();
+ observableUpdate : Subject<any> = new Subject<any>();
   constructor(private http : HttpClient) { }
 
   get = (url) => {
 return this.http.get(this.urlBase + url);
   }
 
-  
-  // getAll = (url, data) => {
-  //   const headers = new HttpHeaders({
-    
-  //     "Accept": "application/json"
- 
-  //   });
-  //   return this.http.get(this.urlBase + url, {headers : headers});
-  //     }
+  put = (url,data) => {
+    const headers = new HttpHeaders({
+      "Accept": "application/json",
+    });
+    return this.http.put(this.urlBase + url,data, {headers : headers});
+  }
 
   post = (url, data) => {
     const headers = new HttpHeaders({
@@ -44,6 +42,8 @@ return this.http.get(this.urlBase + url);
 
   delete = (url) => {
 
-    return this.http.delete(this.urlBase + url )
+    return this.http.delete(this.urlBase + url)
   }
+
+
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import { HttpEventType } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -16,23 +16,43 @@ export class AddMangaComponent implements OnInit {
   categorie: string;
   id: any = undefined;
   cover: any;
-  formData = new FormData();
+  formData: FormData = new FormData();
   categories: any;
   catExist = false;
   test;
   isAddManga = false;
   cat;
   testCat;
+  isUpdate;
+  formDataEdit: FormData;
 
-  constructor(private api: ApiService, private router: Router) { }
+
+  constructor(private api: ApiService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    if (this.route.snapshot.params.id != undefined) {
+      this.api.get('manga/' + this.route.snapshot.params.id).subscribe((res: any) => {
+        console.log(res);
+        this.id = res.id;
+        this.titre = res.titre;
+        this.auteur = res.auteur;
+        this.texte = res.texte;
+      })
+    }
+
     this.api.get('categorie').subscribe((res: any) => {
 
       this.categories = res;
       if (res.length > 0) {
         this.catExist = true;
       }
+    })
+
+
+
+    this.api.observableUpdate.subscribe(value => {
+      console.log(value)
+      this.isUpdate = value;
     })
   }
 
@@ -44,35 +64,66 @@ export class AddMangaComponent implements OnInit {
 
     this.api.get('categorie/search/' + this.cat).subscribe((res: any) => {
       const livre = { Titre: this.titre, Auteur: this.auteur, Texte: this.texte, CategorieId: res.id };
-
-      this.api.post('Manga', livre).subscribe((event: any) => {
-        console.log(event);
-        this.id = event.numero;
-        this.api.observableAddImages.next(event.numero);
-        if (event.numero > 0) {
-          for (let l in livre) {
-            this.formData.append(l, livre[l]);
-          }
-          this.api.upload('Manga/upload/cover/' + event.numero, this.formData).subscribe((res: any) => {
-            if (res.url != null) {
-              alert(event.message)
-              let reponse = prompt("Voulez vous ajouter des images ? Y/N");
-              if (reponse == "Y") {
-                this.router.navigate(['formImages']);
+      if (this.id == undefined) {
+        this.api.post('Manga', livre).subscribe((event: any) => {
+          console.log(event);
+          this.id = event.numero;
+          this.api.observableAddImages.next(event.numero);
+          if (event.numero > 0) {
+            for (let l in livre) {
+              this.formData.append(l, livre[l]);
+            }
+            this.api.upload('Manga/upload/cover/' + event.numero, this.formData).subscribe((res: any) => {
+              if (res.url != null) {
+                alert(event.message)
+                let reponse = prompt("Voulez vous ajouter des images ? Y/N");
+                if (reponse == "Y" || reponse == "y") {
+                  this.router.navigate(['formImages']);
+                }
+                else {
+                  this.router.navigate(['liste']);
+                }
               }
               else {
-                this.router.navigate(['liste']);
+                alert(res.message);
               }
+            })
+          }
+          else {
+            alert(event.message);
+          }
+        });
+      }
+      else {
+        //modification    
+        this.api.put('manga/update/' + this.id, livre).subscribe((res: any) => {
+          if (res) {
+            
+            for (let l in livre) {
+              this.formData.append(l, livre[l]);
             }
-            else {
-              alert(res.message);
-            }
-          })
-        }
-        else {
-          alert(event.message);
-        }
-      });
+            console.log(this.formData)
+            //modification des images
+            this.api.upload('Manga/update/cover/' + this.id, this.formData).subscribe((response: any) => {
+              if (response) {
+                alert(response.message);
+                let question = prompt("voulez-vous modifier les images ? Y/N");
+                if (question == "Y" || question == "y") {
+                  
+                }
+              }
+
+              else {
+                alert("erreur");
+              }
+            })
+          }
+          else {
+            alert("erreur");
+          }
+        })
+      }
+
     })
   }
 
@@ -85,7 +136,12 @@ export class AddMangaComponent implements OnInit {
   }
 
   AjouterManga = () => {
+
     this.isAddManga = true;
+  }
+
+  AjouterImages = () => {
+    this.router.navigate(['formImages']);
   }
 
 }

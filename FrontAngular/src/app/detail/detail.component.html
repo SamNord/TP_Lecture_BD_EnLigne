@@ -18,11 +18,17 @@
                     </div>
                 </div>
                 <div class="row mb-2">
-                    <div class="col-4">
+                    <div class="col-3">
                         <button class="btn btn-primary" (click)="Read()">Lecture Manga</button>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <button class="btn btn-success" (click)="AddToFavoris(numero)">Ajouter aux favoris</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-danger" (click)="DeleteManga(numero)">Supprimer</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-dark" (click)="Update(numero)">Modifier</button>
                     </div>
                 </div>
             </div>

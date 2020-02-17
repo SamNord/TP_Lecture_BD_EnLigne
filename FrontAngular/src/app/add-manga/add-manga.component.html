@@ -1,15 +1,21 @@
-<div class="row m-5">
-    <div class="col-5 survol">
-        <button class="btn  bouton" (click)="AjouterManga()">Ajouter un manga</button>
+<div class="row mt-3">
+    <div class="col-3 survol">
+        <button class="btn  bouton" (click)="AjouterManga()">
+            <span *ngIf='id==null;else idNonNull'>Ajouter Manga</span>
+            <ng-template #idNonNull><span>Modifier Manga</span></ng-template>
+        </button>
     </div>
-    <div class="col-5 survol">
-        <button class="btn  bouton" (click)="AjouterCategorie()">Ajouter une catégorie</button>
+    <div class="col-3 survol">
+        <button class="btn  bouton" (click)="AjouterCategorie()">Ajouter catégorie</button>
+    </div>
+    <div class="col-3 survol">
+        <button class="btn  bouton" (click)="AjouterImages()">Ajouter images</button>
     </div>
 </div>
 
 <div class="row" *ngIf="isAddManga">
     <div class="col-5 offset-3 form">
-        <form class="p-3"> 
+        <form class="p-3">
             <div class="form-group">
                 <input type="text" [(ngModel)]="titre" name="titre" class="form-control" id="exampleFormControlInput1"
                     placeholder="titre">
@@ -47,7 +53,10 @@
 
             <div class="row">
                 <div class="col">
-                    <button type="submit" class="btn btn-danger boutCat" (click)="Add()">Ajouter</button>
+                    <button type="submit" class="btn btn-danger boutCat" (click)="Add()">
+                        <span *ngIf='id==null;else idNonNull'>Ajouter Manga</span>
+                        <ng-template #idNonNull><span>Modifier Manga</span></ng-template>
+                    </button>
                 </div>
             </div>
         </form>

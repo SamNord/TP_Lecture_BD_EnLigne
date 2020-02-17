@@ -11,10 +11,11 @@ favoris;
   constructor(private api : ApiService) { }
 
   ngOnInit() {
-this.api.observableFavoris.subscribe((value : any) => {
-  console.log(value);
-// this.favoris = value;
-})
+
+   this.favoris= JSON.parse(localStorage.getItem('myManga'));
+   console.log(this.favoris)
+
+
   }
 
 }

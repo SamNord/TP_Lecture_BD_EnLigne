@@ -15,9 +15,11 @@ export class DetailComponent implements OnInit {
   texte;
   images;
   numero;
- 
+  monManga;
+ liste = [];
   isReading = false;
   detailExist = false;
+  listeM;
 
   constructor(private route: ActivatedRoute, private api: ApiService, private router : Router) { }
 
@@ -31,6 +33,7 @@ export class DetailComponent implements OnInit {
         this.auteur = res.auteur;
         this.texte = res.texte;
         this.images = res.images;
+        console.log(res.images)
         this.detailExist = true;
       })
     }
@@ -41,16 +44,40 @@ export class DetailComponent implements OnInit {
   }
 
   AddToFavoris = (id) => {
-    this.api.get('manga/add/favoris/' + id).subscribe((res: any) => {
-      if (res.length > 0) {
-        alert("ajouté");
-        this.api.observableFavoris.next(res);
-        this.router.navigate(['favoris']);
+this.api.get('manga/'+ id).subscribe((res : any)=> {
+ //récupérer ce qui est dans le localStorage et le mettre dans un tableau vide puis
+ // on y ajoute la nouvelle donnée dans ce tableau
+this.monManga = res;
+if(JSON.parse(localStorage.getItem('myManga')) != null) {
+  
+}
+
+
+this.liste.push(res);
+
+  localStorage.setItem('myManga', JSON.stringify(this.liste));
+
+console.log(JSON.parse(localStorage.getItem('myManga')));
+ 
+})
+    
+  }
+
+  DeleteManga = (id) => {
+    
+    this.api.delete('Manga/delete/'+ id).subscribe((res : any) => {
+      if(res) {
+        alert(res.message);
       }
       else {
-        alert("échec");
+        alert("erreur");
       }
     })
+  }
+
+  Update = (id) => {
+    this.api.observableUpdate.next(true);
+    this.router.navigate(['update/' + id]);
   }
 
 }

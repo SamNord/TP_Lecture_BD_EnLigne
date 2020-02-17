@@ -38,6 +38,9 @@ namespace Back.Models
             Images = new List<Image>();
         }
 
+
+        /**************************************************************
+         *************Méthodes de réinitialisation des tables*********/
         public static bool DeleteTableManga()
         {
             command = new SqlCommand("truncate table manga", connection);
