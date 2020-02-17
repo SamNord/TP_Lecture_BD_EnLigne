@@ -14,8 +14,7 @@ favoris;
 
    this.favoris= JSON.parse(localStorage.getItem('myManga'));
    console.log(this.favoris)
-
+console.log(localStorage.getItem('myManga'))
 
   }
-
 }

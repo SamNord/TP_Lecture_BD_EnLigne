@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../api.service';
 import { Subject } from 'rxjs';
+import { ParseError } from '@angular/compiler';
 
 @Component({
   selector: 'app-detail',
@@ -16,12 +17,12 @@ export class DetailComponent implements OnInit {
   images;
   numero;
   monManga;
- liste = [];
+  liste = [];
   isReading = false;
   detailExist = false;
   listeM;
 
-  constructor(private route: ActivatedRoute, private api: ApiService, private router : Router) { }
+  constructor(private route: ActivatedRoute, private api: ApiService, private router: Router) { }
 
   ngOnInit() {
     if (this.route.snapshot.params.id != undefined) {
@@ -33,7 +34,7 @@ export class DetailComponent implements OnInit {
         this.auteur = res.auteur;
         this.texte = res.texte;
         this.images = res.images;
-        console.log(res.images)
+        // console.log(res.images)
         this.detailExist = true;
       })
     }
@@ -44,29 +45,42 @@ export class DetailComponent implements OnInit {
   }
 
   AddToFavoris = (id) => {
-this.api.get('manga/'+ id).subscribe((res : any)=> {
- //récupérer ce qui est dans le localStorage et le mettre dans un tableau vide puis
- // on y ajoute la nouvelle donnée dans ce tableau
-this.monManga = res;
-if(JSON.parse(localStorage.getItem('myManga')) != null) {
-  
-}
+    this.api.get('manga/' + id).subscribe((res: any) => {
+      //récupérer ce qui est dans le localStorage et le mettre dans un tableau vide puis
+      // on y ajoute la nouvelle donnée dans ce tableau
+      this.monManga = res;
+      let json = localStorage.getItem('myManga');
+      // this.liste = (json != null) ? JSON.parse(json) : [];
 
+      if (json != null) {
+        this.liste = JSON.parse(json);
+        // this.liste.forEach(element => {
+        //   if (element.id != id) {
+        //     this.liste.push(res);
+        //     console.log(this.liste);
+        //     alert("ajouté aux favoris")
+        //   }
+        //   else {
+        //     alert("ce manga existe déjà dans vos favoris");
+        //   }
+        // });
+        this.liste.push(res);
+        console.log(this.liste)
+      }
 
-this.liste.push(res);
+      else {
+        this.liste.push(this.monManga);
+        alert("ajouté aux favoris");
+        localStorage.setItem('myManga', JSON.stringify(this.liste));
 
-  localStorage.setItem('myManga', JSON.stringify(this.liste));
-
-console.log(JSON.parse(localStorage.getItem('myManga')));
- 
-})
-    
+      }
+    })
   }
 
   DeleteManga = (id) => {
-    
-    this.api.delete('Manga/delete/'+ id).subscribe((res : any) => {
-      if(res) {
+
+    this.api.delete('Manga/delete/' + id).subscribe((res: any) => {
+      if (res) {
         alert(res.message);
       }
       else {

@@ -219,17 +219,23 @@ namespace Back.Controllers
         {
             DataContext dc = new DataContext();
             Image image = dc.Image.FirstOrDefault(i => i.Id == id);
+            
             if (image != null)
             {
+                image.UrlImage = "";
                 Manga manga = dc.Manga.Include(c => c.Categorie).Include(i => i.Images).FirstOrDefault(x => x.Id == image.MangaId);
                 string pathImg = Guid.NewGuid().ToString() + "-" + data.Image.FileName;
                 string editImg = Path.Combine(_env.WebRootPath, "images", pathImg);
                 FileStream stream = System.IO.File.Create(editImg);
                 data.Image.CopyTo(stream);
                 stream.Close();
-                image.UrlImage = "images/" + pathImg;
-                dc.SaveChanges();
-                return Ok(new { message = "image modifiée" });
+                string path = "images/" + pathImg;
+                image.MangaId = manga.Id;
+                image.UrlImage = $"{Request.Scheme}://{Request.Host.Value}/{path}";
+                if (dc.SaveChanges() > 0)
+                    return Ok(new { message = "image modifiée" });
+                else
+                    return Ok(new { message = "erreur" });
             }
             else
             {
@@ -263,7 +269,7 @@ namespace Back.Controllers
         /*************************************************************
         ******************************Liste des images **************/
         [HttpGet("getImage/{id}")]
-        public IActionResult GetImage(int id)
+        public IActionResult GetImages(int id)
         {
             DataContext dc = new DataContext();
             Manga manga = dc.Manga.Include(c => c.Categorie).Include(i => i.Images).FirstOrDefault(x => x.Id == id);
@@ -280,25 +286,6 @@ namespace Back.Controllers
             {
                 return NotFound();
             }
-        }
-
-        /************************************************************
-         **********************Ajouter aux favoris*****************/
-        [HttpGet("add/favoris/{id}")]
-        public IActionResult AddFavoris(int id)
-        {
-            DataContext dc = new DataContext();
-            Manga manga = dc.Manga.Include(c => c.Categorie).Include(i => i.Images).FirstOrDefault(x => x.Id == id);
-            string json = HttpContext.Session.GetString("favoris");
-            List<Manga> liste = (json != null) ? JsonConvert.DeserializeObject<List<Manga>>(json) : new List<Manga>();
-            if (!VerifFavoris(id))
-            {
-                liste.Add(manga);
-                HttpContext.Session.SetString("favoris", JsonConvert.SerializeObject(liste));
-                return Ok(liste);
-            }
-            else
-                return Ok(new { message = "manga déjà dans les favoris" });
         }
 
         /************************************************************

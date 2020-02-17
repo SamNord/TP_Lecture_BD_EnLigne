@@ -8,6 +8,7 @@ export class ApiService {
  observableAddImages : Subject<any> = new Subject<any>();
  observableFavoris : Subject<any> = new Subject<any>();
  observableUpdate : Subject<any> = new Subject<any>();
+ observableUpdateImage : Subject<any> = new Subject<any>();
   constructor(private http : HttpClient) { }
 
   get = (url) => {

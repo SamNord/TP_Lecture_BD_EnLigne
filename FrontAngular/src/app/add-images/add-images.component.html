@@ -1,25 +1,25 @@
 <div class="row mt-5">
 
-        <div class="col-3 offset-10">
-            <button class="btn btn-primary" (click)="Retour()">Retour</button>
-        </div>
+    <div class="col-3 offset-10">
+        <button class="btn btn-primary" (click)="Retour()">Retour</button>
+    </div>
 
- 
+
     <div class="col-5 offset-3">
         <form>
             <div class="form-group">
                 <input class="form-control" [(ngModel)]="num" name="num" type="number"
                     placeholder="entrez le numéro du manga">
-                    <button class="btn btn-warning" (click)="Afficher()">Afficher</button>
+                <button class="btn btn-warning" (click)="Afficher()">Afficher</button>
             </div>
 
-            <div class="row" *ngIf= "isMangaExist">
+            <div class="row" *ngIf="isMangaExist">
                 <div class="col">
-                    <div class="row m-3 list"> 
+                    <div class="row m-3 list">
                         <div class="col-2 m-4 p-1">
                             <div class="card" style="width: 13rem;">
-                               <img src="{{manga.urlCover}}" class="card-img-top cov" alt="...">
-                                <a routerLink= "/detail/{{ manga.id }}" class="btn stretched-link">{{ manga.titre }}</a>
+                                <img src="{{manga.urlCover}}" class="card-img-top cov" alt="...">
+                                <a routerLink="/detail/{{ manga.id }}" class="btn stretched-link">{{ manga.titre }}</a>
                             </div>
                         </div>
                     </div>
@@ -31,4 +31,31 @@
             <button type="submit" class="btn btn-danger" (click)="AddImage($event)">Ajouter</button>
         </form>
     </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <button class="btn btn-info" (click)= "SeeImages()">Afficher les images</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-5">
+        <div class="row m-3 list">
+            <div class="col-2 m-4 p-1" *ngFor='let img of images'>
+                <div class="card" style="width: 10rem; height: 7rem;">
+                    <img src="{{img.urlImage}}" class="card-img-top cov" alt="...">
+                    <button class="btn btn-dark" (click) ="UpdateImages(img.id)">Modifier</button>
+                    <p>{{ img.Id }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-4 form-group" *ngIf = "isModifImage">
+        <input type=" file" (change)="UploadImg($event)" class="form-control">
+    </div>
+    <div class="col-2" *ngIf = "isModifImage">
+        <button class="btn btn-danger" (click)="Update()">Update</button>
+    </div>
+
 </div>

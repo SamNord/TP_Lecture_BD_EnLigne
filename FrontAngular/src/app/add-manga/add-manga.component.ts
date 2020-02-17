@@ -109,7 +109,7 @@ export class AddMangaComponent implements OnInit {
                 alert(response.message);
                 let question = prompt("voulez-vous modifier les images ? Y/N");
                 if (question == "Y" || question == "y") {
-                  
+                  this.router.navigate(['updateImage/' + this.id])
                 }
               }
 
