@@ -45,6 +45,7 @@ export class DetailComponent implements OnInit {
   }
 
   AddToFavoris = (id) => {
+    // localStorage.clear();
     this.api.get('manga/' + id).subscribe((res: any) => {
       //récupérer ce qui est dans le localStorage et le mettre dans un tableau vide puis
       // on y ajoute la nouvelle donnée dans ce tableau
@@ -57,17 +58,20 @@ export class DetailComponent implements OnInit {
         this.liste.forEach(element => {
           if (element.id != id) {
             this.liste.push(res);
-            alert("ajouté aux favoris")
+            alert("ajouté aux favoris");
+            this.router.navigate(['favoris']);
           }
           else {
-            alert("ce manga existe déjà dans vos favoris");            
+            alert("ce manga existe déjà dans vos favoris");
           }
         });
       }
       else {
+
         this.liste = [];
         this.liste.push(this.monManga);
         alert("ajouté aux favoris");
+        this.router.navigate(['favoris']);
       }
       //sauvegarde dans le localStorage
       localStorage.setItem('myManga', JSON.stringify(this.liste));
