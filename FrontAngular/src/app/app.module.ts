@@ -18,6 +18,8 @@ import { AddImagesComponent } from './add-images/add-images.component';
 import { FavorisComponent } from './favoris/favoris.component';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { TestEditorComponent } from './test-editor/test-editor.component';
+import { LectureComponent } from './lecture/lecture.component';
+import { CarousselComponent } from './caroussel/caroussel.component';
 
 
 const mesRoutes = [
@@ -32,6 +34,7 @@ const mesRoutes = [
   {path : 'updateImage/:id', component : AddImagesComponent },
   {path : 'favoris', component : FavorisComponent },
   {path : 'detail/:id', component : DetailComponent },
+  {path : 'lecture/:id', component : LectureComponent },
   {path : 'test', component : TestEditorComponent }
 ]
 
@@ -49,6 +52,8 @@ const mesRoutes = [
     AddImagesComponent,
     FavorisComponent,
     TestEditorComponent,
+    LectureComponent,
+    CarousselComponent,
     
   ],
   imports: [

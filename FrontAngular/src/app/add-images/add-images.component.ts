@@ -57,7 +57,10 @@ export class AddImagesComponent implements OnInit {
       else {
         alert("aucun manga à ce numéro");
       }
+      this.formData = new FormData();
     })
+
+  
   }
 
   Afficher = () => {

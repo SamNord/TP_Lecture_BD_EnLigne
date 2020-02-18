@@ -14,12 +14,17 @@
                 </div>
                 <div class="row">
                     <div class="col">
+                        <p>Catégorie : {{ categorie }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
                         <p> {{ texte }}</p>
                     </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-3">
-                        <button class="btn btn-primary" (click)="Read()">Lecture Manga</button>
+                        <button class="btn btn-primary" (click)="Read(numero)">Lecture Manga</button>
                     </div>
                     <div class="col-3">
                         <button class="btn btn-success" (click)="AddToFavoris(numero)">Ajouter aux favoris</button>
@@ -49,3 +54,7 @@
         </div>
     </div>
 </div>
+
+
+
+

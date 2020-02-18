@@ -9,3 +9,26 @@ img {
     width: 51px;
     height: 51px;
 }
+
+nav  :hover {
+    box-shadow: 3px 3px fuchsia, 2px 2px purple ;
+    background-color: springgreen;
+}
+
+.survol :hover {
+    background-color: rgb(0, 255, 255);
+    box-shadow: 3px 3px fuchsia, 2px 2px purple ;
+    color: rgb(55, 0, 255);
+    font-weight: bold;
+    font-size: 33px;
+}
+
+.survol {
+    padding: 0;
+}
+
+nav a {
+    color: rgb(139, 6, 95);
+    font-weight: bold;
+    font-size: 21px;
+}

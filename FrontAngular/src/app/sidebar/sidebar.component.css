@@ -6,16 +6,30 @@
 }
 
 a {
-    width: 223px;
-   
-}
-
-.text {
-    color: white;
+    width: 210px;
+    color: rgb(146, 9, 66);
    padding:0px;
+   font-size: 15px;
+   font-weight: bold;
+   margin: 0;
+   margin-left: 0px;
+
 }
 
 .text :hover {
-    background-color: red;
+    background-color: rgb(0, 255, 255);
+    color: rgb(255, 42, 219);
+    font-weight: bold;
+    font-size: 21px;
+}
+
+/* .side :hover {
+    background-color:rgb(0, 255, 255);
+} */
+
+
+.text {
+    padding: 0;
+  
 }
 

@@ -15,6 +15,7 @@ export class DetailComponent implements OnInit {
   auteur;
   texte;
   images;
+  categorie;
   numero;
   monManga;
   liste = [];
@@ -30,6 +31,7 @@ export class DetailComponent implements OnInit {
         // console.log(res);
         this.numero = res.id;
         this.titre = res.titre;
+        this.categorie = res.categorie.type;
         this.cover = res.urlCover;
         this.auteur = res.auteur;
         this.texte = res.texte;
@@ -40,8 +42,9 @@ export class DetailComponent implements OnInit {
     }
   }
 
-  Read = () => {
-    this.isReading = true;
+  Read = (id) => {
+    // this.isReading = true;
+this.router.navigate(['lecture/' + id]);
   }
 
   AddToFavoris = (id) => {
