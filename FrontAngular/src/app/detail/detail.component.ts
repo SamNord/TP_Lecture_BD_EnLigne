@@ -20,14 +20,14 @@ export class DetailComponent implements OnInit {
   liste = [];
   isReading = false;
   detailExist = false;
-  listeM;
+
 
   constructor(private route: ActivatedRoute, private api: ApiService, private router: Router) { }
 
   ngOnInit() {
     if (this.route.snapshot.params.id != undefined) {
       this.api.get('manga/' + this.route.snapshot.params.id).subscribe((res: any) => {
-        console.log(res);
+        // console.log(res);
         this.numero = res.id;
         this.titre = res.titre;
         this.cover = res.urlCover;
@@ -54,26 +54,23 @@ export class DetailComponent implements OnInit {
 
       if (json != null) {
         this.liste = JSON.parse(json);
-        // this.liste.forEach(element => {
-        //   if (element.id != id) {
-        //     this.liste.push(res);
-        //     console.log(this.liste);
-        //     alert("ajouté aux favoris")
-        //   }
-        //   else {
-        //     alert("ce manga existe déjà dans vos favoris");
-        //   }
-        // });
-        this.liste.push(res);
-        console.log(this.liste)
+        this.liste.forEach(element => {
+          if (element.id != id) {
+            this.liste.push(res);
+            alert("ajouté aux favoris")
+          }
+          else {
+            alert("ce manga existe déjà dans vos favoris");            
+          }
+        });
       }
-
       else {
+        this.liste = [];
         this.liste.push(this.monManga);
         alert("ajouté aux favoris");
-        localStorage.setItem('myManga', JSON.stringify(this.liste));
-
       }
+      //sauvegarde dans le localStorage
+      localStorage.setItem('myManga', JSON.stringify(this.liste));
     })
   }
 

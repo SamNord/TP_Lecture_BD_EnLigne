@@ -9,5 +9,6 @@
            <img src="{{fav.urlCover}}" class="card-img-top cov" alt="...">
             <a routerLink= "/detail/{{ fav.id }}" class="btn stretched-link">{{ fav.titre }}</a>
         </div>
+        <button class="btn btn-danger" (click) = "RemoveAtFavoris(fav.id)">Retirer des favoris</button>
     </div>
 </div>

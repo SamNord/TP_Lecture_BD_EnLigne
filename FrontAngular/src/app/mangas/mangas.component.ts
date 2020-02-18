@@ -12,7 +12,7 @@ export class MangasComponent implements OnInit {
 
   ngOnInit() {
     this.api.get('manga').subscribe((response: any) => {
-      console.log(response)
+      // console.log(response)
       this.mangas = response;
 // this.mangas = response;
     })

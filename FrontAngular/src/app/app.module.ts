@@ -16,7 +16,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { DetailComponent } from './detail/detail.component';
 import { AddImagesComponent } from './add-images/add-images.component';
 import { FavorisComponent } from './favoris/favoris.component';
-
+import { CKEditorModule } from 'ng2-ckeditor';
 import { TestEditorComponent } from './test-editor/test-editor.component';
 
 
@@ -48,15 +48,15 @@ const mesRoutes = [
     DetailComponent,
     AddImagesComponent,
     FavorisComponent,
-
-    TestEditorComponent
- 
+    TestEditorComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule.forRoot(mesRoutes),
     FormsModule,
+    CKEditorModule,
     ReactiveFormsModule,
     HttpClientModule,
 

@@ -15,6 +15,17 @@ exports.config = {
   capabilities: {
     browserName: 'chrome'
   },
+      //ajout pour editor
+      map: {
+        'ng2-ckeditor': 'npm:ng2-ckeditor',
+      },
+      packages: {
+        'ng2-ckeditor': {
+          main: 'lib/index.js',
+          defaultExtension: 'js',
+        },
+      },
+      //fin ajout
   directConnect: true,
   baseUrl: 'http://localhost:4200/',
   framework: 'jasmine',

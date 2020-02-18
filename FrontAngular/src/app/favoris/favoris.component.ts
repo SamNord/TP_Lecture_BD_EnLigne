@@ -7,14 +7,26 @@ import { ApiService } from '../api.service';
   styleUrls: ['./favoris.component.css']
 })
 export class FavorisComponent implements OnInit {
-favoris;
-  constructor(private api : ApiService) { }
+  favoris = [];
+  mangas;
+  tab = []
+  constructor(private api: ApiService) { }
 
   ngOnInit() {
 
-   this.favoris= JSON.parse(localStorage.getItem('myManga'));
-   console.log(this.favoris)
-console.log(localStorage.getItem('myManga'))
+    this.favoris = JSON.parse(localStorage.getItem('myManga'));
+    console.log(this.favoris)
+  }
 
+  RemoveAtFavoris = (id) => {
+    this.favoris.forEach(element => {
+      if (element.id == id) {
+        let index = this.favoris.indexOf(element);
+        this.favoris.splice(index, 1);
+      }
+    })
+    localStorage.setItem('myManga', JSON.stringify(this.favoris));
+    console.log(this.favoris);
+    // localStorage.clear();
   }
 }
