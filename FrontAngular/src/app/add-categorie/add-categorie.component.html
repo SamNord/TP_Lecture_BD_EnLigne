@@ -12,31 +12,28 @@
             </div>
 
             <div class="row">
-                <div class="col">
-                    <button type="submit" class="btn btn-danger b1" (click)="AddCat()">Ajouter</button>
+                <div class="col boutCat">
+                    <button type="submit" class="btn" (click)="AddCat($event)">
+                        <span *ngIf='id==null;else idNonNull' class="add">Ajouter Catégorie</span>
+                        <ng-template #idNonNull><span class="delete">Modifier Catégorie</span></ng-template>
+                    </button>
                 </div>
             </div>
-
         </form>
     </div>
-    <div class="col-3 offset-4">
-        <button class="btn btn-primary b1" (click)="Retour()">Retour</button>
+    <div class="col-3 offset-4 bRh">
+        <button class="btn btn-primary bR" (click)="Retour()">Retour</button>
     </div>
 </div>
 <div class="row liste">
 
     <div class="list-group m-2 col-5 offset-1" *ngFor="let c of listCat">
-        <a href="#" class="list-group-item list-group-item-action list-group-item boutonColor active">
+        <a routerLink="/detail/categorie/{{ c.id }}"
+            class="list-group-item list-group-item-action list-group-item boutonColor active">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1"> Catégorie n° {{c.id}}</h5>
-                <small>
-                    <button class="btn btn-dark">Modifier</button>
-                    <button class="btn btn-danger" (click)="deleteCat(c.id)">Supprimer</button>
-                </small>
-
             </div>
             <p class="mb-1">Type : {{ c.type }}</p>
         </a>
     </div>
-
 </div>

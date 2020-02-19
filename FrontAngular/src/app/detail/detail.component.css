@@ -16,3 +16,13 @@
     width: 200px;
     height: 200px;
 }
+
+.bR {
+    background-color: yellow;
+    color: purple;
+}
+
+.hov :hover {
+    background-color: purple;
+    color: yellow;
+}

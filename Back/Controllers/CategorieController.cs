@@ -51,9 +51,31 @@ namespace Back.Controllers
             DataContext dc = new DataContext();
             dc.Add(categorie);
             if (dc.SaveChanges() > 0)
-                return Ok(new { message = "catégorie ajoutée", catId = categorie.Id });
+                return Ok(new { message = "catégorie ajoutée", catId = categorie.Id, cat = categorie });
             else
                 return Ok(new { message = "erreur" });
+        }
+
+        /****************************************************************
+        ************************Modifier une catégorie******************/
+        [HttpPut("update/{id}")]
+        public IActionResult Update(int id, [FromBody] Categorie categorieEdit)
+        {
+            DataContext dc = new DataContext();
+            /*je recherche la catégorie à modifier par son id*/
+            Categorie categorie = dc.Categorie.Include(x => x.Mangas).FirstOrDefault(c => c.Id == id);
+            /*si je la trouve, je procède à sa modification*/
+            if (categorie != null)
+            {
+                categorie.Type = categorieEdit.Type;
+                dc.SaveChanges();
+                return Ok(new { message = "catégorie mis à jour", idCat = categorie.Id });
+            }
+            /*sinon j'affiche un notFound = erreur 404*/
+            else
+            {
+                return NotFound();
+            }
         }
 
         /****************************************************************
@@ -62,7 +84,7 @@ namespace Back.Controllers
         public IActionResult Delete(int id)
         {
             DataContext dc = new DataContext();
-            Categorie cat = dc.Categorie.FirstOrDefault(c => c.Id == id);
+            Categorie cat = dc.Categorie.Include(x => x.Mangas).FirstOrDefault(c => c.Id == id);
             if (cat != null)
             {
                 dc.Categorie.Remove(cat);

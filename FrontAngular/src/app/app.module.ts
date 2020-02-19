@@ -20,6 +20,9 @@ import { CKEditorModule } from 'ng2-ckeditor';
 import { TestEditorComponent } from './test-editor/test-editor.component';
 import { LectureComponent } from './lecture/lecture.component';
 import { CarousselComponent } from './caroussel/caroussel.component';
+import { ListByCategorieComponent } from './list-by-categorie/list-by-categorie.component';
+import { ListMangasAdminComponent } from './list-mangas-admin/list-mangas-admin.component';
+import { DetailCategorieComponent } from './detail-categorie/detail-categorie.component';
 
 
 const mesRoutes = [
@@ -28,14 +31,18 @@ const mesRoutes = [
   {path : 'form', component : AddMangaComponent },
   {path : 'update/:id', component : AddMangaComponent },
   {path : 'cate', component : AddCategorieComponent },
+  {path : 'update/cat/:id', component : AddCategorieComponent },
+  {path : 'detail/categorie/:id', component : DetailCategorieComponent },
   {path : 'liste', component : MangasComponent },
+  {path : 'liste/:cat', component : ListByCategorieComponent },
   {path : 'search', component : SearchComponent },
   {path : 'formImages', component : AddImagesComponent },
   {path : 'updateImage/:id', component : AddImagesComponent },
   {path : 'favoris', component : FavorisComponent },
   {path : 'detail/:id', component : DetailComponent },
   {path : 'lecture/:id', component : LectureComponent },
-  {path : 'test', component : TestEditorComponent }
+  {path : 'test', component : TestEditorComponent },
+  {path : 'listmangasAdmin', component : ListMangasAdminComponent }
 ]
 
 @NgModule({
@@ -54,6 +61,9 @@ const mesRoutes = [
     TestEditorComponent,
     LectureComponent,
     CarousselComponent,
+    ListByCategorieComponent,
+    ListMangasAdminComponent,
+    DetailCategorieComponent,
     
   ],
   imports: [

@@ -14,6 +14,33 @@
     opacity : 0.9;
 }
 
-.boutonColor {
+.bR {
     background-color:#0ddec2;
+    color: purple;
+}
+
+.bRh :hover {
+    background-color: purple;
+    color : #0ddec2;
+    font-weight: bold;
+    font-size: 21px;
+}
+
+.add {
+    background-color: rgb(247, 46, 180);
+    color:yellow;
+    padding: 3px;
+}
+
+.delete {
+    background-color: green;
+    color: yellow;
+    padding: 3px;
+}
+
+
+.boutCat :hover {
+    background-color: green;
+    color: yellow;
+    padding: 3px;
 }

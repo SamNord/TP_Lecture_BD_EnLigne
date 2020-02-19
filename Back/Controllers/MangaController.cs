@@ -99,6 +99,23 @@ namespace Back.Controllers
         }
 
         /*************************************************************
+       ********************Recherche par titre ou auteur************/
+        [HttpGet("search/byCategory/{id}")]
+        public IActionResult SearchByCategory(int id)
+        {
+            DataContext dc = new DataContext();
+            List<Manga> listeMangas = dc.Manga.Include(c => c.Categorie).Include(i => i.Images).Where(x => x.CategorieId == id).ToList();
+            if (listeMangas.Count > 0)
+            {
+                return Ok(listeMangas);
+            }
+            else
+            {
+                return Ok(new { message = "pas de mangas correspondant à votre recherche" });
+            }
+        }
+
+        /*************************************************************
         *****************Ajout du manga : partie 1(données en json*****/
         [HttpPost]
         public IActionResult Post([FromBody] Manga manga)
@@ -218,7 +235,7 @@ namespace Back.Controllers
         public IActionResult UpdateImage(int id, [FromForm] ImageType data)
         {
             DataContext dc = new DataContext();
-            Image image = dc.Image.FirstOrDefault(i => i.Id == id);
+            Image image = dc.Image.Include(m => m.Manga).FirstOrDefault(i => i.Id == id);
             
             if (image != null)
             {
@@ -236,6 +253,25 @@ namespace Back.Controllers
                     return Ok(new { message = "image modifiée" });
                 else
                     return Ok(new { message = "erreur" });
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        /*************************************************************
+        ******************************Suppression d'une image ***********/
+        [HttpDelete("{id}")]
+        public IActionResult DeleteImage(int id)
+        {
+            DataContext dc = new DataContext();
+            Image image = dc.Image.Include(m => m.Manga).FirstOrDefault(i => i.Id == id);
+            if(image != null)
+            {
+                dc.Image.Remove(image);
+                dc.SaveChanges();
+                return Ok(new { message = "image supprimée" });
             }
             else
             {

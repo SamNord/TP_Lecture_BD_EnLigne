@@ -47,6 +47,10 @@ export class DetailComponent implements OnInit {
 this.router.navigate(['lecture/' + id]);
   }
 
+  RetourListe = () => {
+    this.router.navigate(['liste']);
+  }
+
   AddToFavoris = (id) => {
     // localStorage.clear();
     this.api.get('manga/' + id).subscribe((res: any) => {
@@ -81,21 +85,6 @@ this.router.navigate(['lecture/' + id]);
     })
   }
 
-  DeleteManga = (id) => {
-
-    this.api.delete('Manga/delete/' + id).subscribe((res: any) => {
-      if (res) {
-        alert(res.message);
-      }
-      else {
-        alert("erreur");
-      }
-    })
-  }
-
-  Update = (id) => {
-    this.api.observableUpdate.next(true);
-    this.router.navigate(['update/' + id]);
-  }
+ 
 
 }

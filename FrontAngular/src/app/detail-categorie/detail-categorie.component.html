@@ -1,0 +1,21 @@
+<div class="row m-3">
+    <div class="col-7 offset-2">
+        <div class="card">
+            <div class="card-header">
+                Catégorie n°{{ id }}/ Genre : {{type }}
+            </div>
+            <div class="card-body scroll">
+                <h5 class="card-title">Liste des mangas :</h5>
+                <div *ngFor="let m of listMangas" class="ml-1">
+                    <ul>
+                        <li>{{ m.titre }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-footer text-muted">
+                <button class="btn btn-dark mr-3"  (click)= "updateCat(id)">Modifier Catégorie</button>
+                <button class="btn btn-danger" (click)="deleteCat(id)">Supprimer</button>
+            </div>
+        </div>
+    </div>
+</div>
