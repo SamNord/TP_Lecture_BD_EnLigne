@@ -10,11 +10,17 @@ import { CKEditor4 } from 'ckeditor4-angular/ckeditor';
 export class TestEditorComponent implements OnInit {
 valeurTexte;
 isSee = false;
+data;
+editor;
   public onChange( event: CKEditor4.EventInfo ) {
     
 this.valeurTexte = event;
  
     console.log(event);
+    // CKEditor4.EditorType.CLASSIC.valueOf() {
+
+    // }
+    // this.data = CKEditor.instances.editor1.getData();
 }
   constructor() { }
 
@@ -23,6 +29,8 @@ this.valeurTexte = event;
   }
 
  get = () => {
+ 
 this.isSee = true;
+
  }
 }
