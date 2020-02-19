@@ -23,6 +23,8 @@ import { CarousselComponent } from './caroussel/caroussel.component';
 import { ListByCategorieComponent } from './list-by-categorie/list-by-categorie.component';
 import { ListMangasAdminComponent } from './list-mangas-admin/list-mangas-admin.component';
 import { DetailCategorieComponent } from './detail-categorie/detail-categorie.component';
+import { PageUneComponent } from './page-une/page-une.component';
+import { PageUneCarousselComponent } from './page-une-caroussel/page-une-caroussel.component';
 
 
 const mesRoutes = [
@@ -42,7 +44,8 @@ const mesRoutes = [
   {path : 'detail/:id', component : DetailComponent },
   {path : 'lecture/:id', component : LectureComponent },
   {path : 'test', component : TestEditorComponent },
-  {path : 'listmangasAdmin', component : ListMangasAdminComponent }
+  {path : 'listmangasAdmin', component : ListMangasAdminComponent },
+  {path : 'list/accueil', component : PageUneComponent }
 ]
 
 @NgModule({
@@ -64,6 +67,8 @@ const mesRoutes = [
     ListByCategorieComponent,
     ListMangasAdminComponent,
     DetailCategorieComponent,
+    PageUneComponent,
+    PageUneCarousselComponent,
     
   ],
   imports: [

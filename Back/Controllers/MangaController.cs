@@ -70,7 +70,7 @@ namespace Back.Controllers
         public IActionResult SearchByAuteur(string mot)
         {
             DataContext dc = new DataContext();
-            List<Manga> listeMangas = dc.Manga.Include(c => c.Categorie).Include(i => i.Images).Where(x => x.Auteur == mot).ToList();
+            List<Manga> listeMangas = dc.Manga.Include(c => c.Categorie).Include(i => i.Images).Where(x => x.Auteur.Contains(mot)).ToList();
             if (listeMangas.Count > 0)
             {
                 return Ok(listeMangas);
