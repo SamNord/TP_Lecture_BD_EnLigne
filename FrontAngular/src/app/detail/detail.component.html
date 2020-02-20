@@ -25,7 +25,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <p> {{ texte }}</p>
+                        <div [innerHTML] = "texte | safeHtml"></div>
                     </div>
                 </div>
                 <div class="row mb-2">
@@ -34,7 +34,7 @@
                     </div>
                     <div class="col-3">
                         <button class="btn btn-success" (click)="AddInFavoris(numero)" *ngIf="desableFavoris">Ajouter
-                            aux favoris</button>                 
+                            aux favoris</button>
                     </div>
                 </div>
             </div>

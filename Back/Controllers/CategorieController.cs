@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Back.Models;
 using Back.Tools;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +46,7 @@ namespace Back.Controllers
 
         /****************************************************************
         ************************Ajouter une catégorie******************/
+        [Authorize]
         [HttpPost("Add")]
         public IActionResult Post([FromBody] Categorie categorie)
         {
@@ -58,6 +60,7 @@ namespace Back.Controllers
 
         /****************************************************************
         ************************Modifier une catégorie******************/
+        [Authorize]
         [HttpPut("update/{id}")]
         public IActionResult Update(int id, [FromBody] Categorie categorieEdit)
         {
@@ -80,6 +83,7 @@ namespace Back.Controllers
 
         /****************************************************************
          ************************Supprimer une catégorie******************/
+        [Authorize]
         [HttpDelete("delete/{id}")]
         public IActionResult Delete(int id)
         {
@@ -106,6 +110,7 @@ namespace Back.Controllers
         /*******************************************************
          ******************Réinitialisation des données*********
          * à tester sur postman**/
+        [Authorize]
         [HttpDelete("remove/manga")]
         public IActionResult DeleteTables()
         {
@@ -115,6 +120,7 @@ namespace Back.Controllers
                 return Ok(new { message = "échec" });
         }
 
+        [Authorize]
         [HttpDelete("remove/image")]
         public IActionResult DeleteTableImage()
         {
@@ -124,6 +130,7 @@ namespace Back.Controllers
                 return Ok(new { message = "échec" });
         }
 
+        [Authorize]
         [HttpDelete("remove/categorie")]
         public IActionResult DeleteTableCat()
         {

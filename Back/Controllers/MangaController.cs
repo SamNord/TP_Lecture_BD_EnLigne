@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Back.Models;
 using Back.Tools;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -117,6 +118,7 @@ namespace Back.Controllers
 
         /*************************************************************
         *****************Ajout du manga : partie 1(données en json*****/
+        //[Authorize]
         [HttpPost]
         public IActionResult Post([FromBody] Manga manga)
         {
@@ -130,6 +132,7 @@ namespace Back.Controllers
 
         /*************************************************************
         ******************************Ajout de l'image ****************/
+        //[Authorize]
         [HttpPut("upload/image/{id}")]
         public IActionResult PutImage(int id, [FromForm] ImageType data)
         {
@@ -159,6 +162,7 @@ namespace Back.Controllers
 
         /*************************************************************
         ******************************Ajout de la couverture *********/
+        //[Authorize]
         [HttpPut("upload/cover/{id}")]
         public IActionResult PutCover(int id, [FromForm] ImageType data)
         {
@@ -181,6 +185,7 @@ namespace Back.Controllers
 
         /*************************************************************
         ******************************Modification du manga **********/
+        [Authorize]
         [HttpPut("update/{id}")]
         public IActionResult Update(int id, [FromBody] Manga mangaEdit)
         {
@@ -205,6 +210,7 @@ namespace Back.Controllers
 
         /*************************************************************
        ******************************Modification de la couverture ****/
+        [Authorize]
         [HttpPut("update/cover/{id}")]
         public IActionResult UpdateCover(int id, [FromForm] ImageType data)
         {
@@ -231,6 +237,7 @@ namespace Back.Controllers
 
         /*************************************************************
         ******************************Modification de l'image ********/
+        [Authorize]
         [HttpPut("update/image/{id}")]
         public IActionResult UpdateImage(int id, [FromForm] ImageType data)
         {
@@ -262,6 +269,7 @@ namespace Back.Controllers
 
         /*************************************************************
         ******************************Suppression d'une image ***********/
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult DeleteImage(int id)
         {
@@ -281,6 +289,7 @@ namespace Back.Controllers
 
         /*************************************************************
         ******************************Suppression du manga ***********/
+        [Authorize]
         [HttpDelete("delete/{id}")]
         public IActionResult Delete(int id)
         {
@@ -290,11 +299,11 @@ namespace Back.Controllers
             {
                 dc.Remove(manga);
                 dc.SaveChanges();
-                return Ok(new { message = "manga supprimé", numero = manga.Id });
-                //if (dc.SaveChanges() > 0)
-                //    return Ok(new { message = "manga supprimé", numero = manga.Id });
-                //else
-                //    return Ok(new { message = "erreur de suppression" });
+                //return Ok(new { message = "manga supprimé", numero = manga.Id });
+                if (dc.SaveChanges() > 0)
+                    return Ok(new { message = "manga supprimé", numero = manga.Id });
+                else
+                    return Ok(new { message = "erreur de suppression" });
             }
             else
             {
@@ -322,41 +331,6 @@ namespace Back.Controllers
             {
                 return NotFound();
             }
-        }
-
-        /************************************************************
-        **************Retirer des favoris ***************************/
-        [HttpGet("remove/favoris/{id}")]
-        public IActionResult RemoveFavoris(int id)
-        {
-            DataContext dc = new DataContext();
-            Manga manga = dc.Manga.Include(c => c.Categorie).Include(i => i.Images).FirstOrDefault(x => x.Id == id);
-            string json = HttpContext.Session.GetString("favoris");
-            List<Manga> liste = (json != null) ? JsonConvert.DeserializeObject<List<Manga>>(json) : new List<Manga>();
-            if (VerifFavoris(id))
-            {
-                liste.Remove(manga);
-                HttpContext.Session.SetString("favoris", JsonConvert.SerializeObject(liste));
-                return Ok(new { message = "manga retiré des favoris" });
-            }
-            else
-                return Ok(new { message = "le manga n'est pas dans les favoris" });
-        }
-
-        /********Méthode qui renvoie true si on trouve le même manga dans la liste des favoris */
-        private bool VerifFavoris(int id)
-        {
-            string jsonFavoris = HttpContext.Session.GetString("favoris");
-            List<Manga> favoris = (jsonFavoris != null) ? JsonConvert.DeserializeObject<List<Manga>>(jsonFavoris) : new List<Manga>();
-            bool found = false;
-            favoris.ForEach(a =>
-            {
-                if (a.Id == id)
-                {
-                    found = true;
-                }
-            });
-            return found;
         }
     }
 

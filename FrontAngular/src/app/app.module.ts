@@ -25,6 +25,8 @@ import { ListMangasAdminComponent } from './list-mangas-admin/list-mangas-admin.
 import { DetailCategorieComponent } from './detail-categorie/detail-categorie.component';
 import { PageUneComponent } from './page-une/page-une.component';
 import { PageUneCarousselComponent } from './page-une-caroussel/page-une-caroussel.component';
+import { Pipe, PipeTransform } from '@angular/core';
+import { SafeHtmlPipe } from './safe-html.pipe';
 
 
 const mesRoutes = [
@@ -69,6 +71,7 @@ const mesRoutes = [
     DetailCategorieComponent,
     PageUneComponent,
     PageUneCarousselComponent,
+    SafeHtmlPipe,
     
   ],
   imports: [

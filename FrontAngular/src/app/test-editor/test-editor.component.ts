@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CKButtonDirective } from 'ng2-ckeditor/ckbutton.directive';
 import { CKEditor4 } from 'ckeditor4-angular/ckeditor';
 
 @Component({
   selector: 'app-test-editor',
   templateUrl: './test-editor.component.html',
-  styleUrls: ['./test-editor.component.css']
+  styleUrls: ['./test-editor.component.css'],
+
 })
 export class TestEditorComponent implements OnInit {
 valeurTexte;
@@ -17,6 +18,7 @@ editor;
 this.valeurTexte = event;
  
     console.log(event);
+    
     // CKEditor4.EditorType.CLASSIC.valueOf() {
 
     // }

@@ -7,7 +7,7 @@
 
 <div class="text" *ngIf="isSee">
    
-    {{ valeurTexte }}
+    <div [innerHTML]="valeurTexte | safeHtml"></div>
 
 </div>
   
