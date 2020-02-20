@@ -1,8 +1,13 @@
-<div class="row m-3">
+<div class="row m-5">
+    <div class="col-3 offset-10 bRh">
+        <button class="btn btn boutonImg" (click)="Retour()">Retour</button>
+    </div>
+</div>
+<div class="row m-5">
     <div class="col-7 offset-2">
         <div class="card">
-            <div class="card-header">
-                Catégorie n°{{ id }}/ Genre : {{type }}
+            <div class="card-header text-center">
+                Catégorie n°{{ id }} - Genre : {{type }}
             </div>
             <div class="card-body scroll">
                 <h5 class="card-title">Liste des mangas :</h5>
@@ -12,9 +17,9 @@
                     </ul>
                 </div>
             </div>
-            <div class="card-footer text-muted">
-                <button class="btn btn-dark mr-3"  (click)= "updateCat(id)">Modifier Catégorie</button>
-                <button class="btn btn-danger" (click)="deleteCat(id)">Supprimer</button>
+            <div class="card-footer text-muted hov">
+                <button class="btn  mr-3 b1"  (click)= "updateCat(id)">Modifier Catégorie</button>
+                <button class="btn  b2" (click)="deleteCat(id)">Supprimer</button>
             </div>
         </div>
     </div>

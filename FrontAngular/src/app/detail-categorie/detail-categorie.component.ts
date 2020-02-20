@@ -46,4 +46,9 @@ export class DetailCategorieComponent implements OnInit {
     })
   }
 
+  
+  Retour = () => {
+    this.router.navigate(['form']);
+  }
+
 }
