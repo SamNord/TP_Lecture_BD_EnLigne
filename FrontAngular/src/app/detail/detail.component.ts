@@ -21,8 +21,9 @@ export class DetailComponent implements OnInit {
   liste = [];
   isReading = false;
   detailExist = false;
-
-
+  isFavorisExist = false;
+  tableauFavoris = [];
+  desableFavoris : boolean;
   constructor(private route: ActivatedRoute, private api: ApiService, private router: Router) { }
 
   ngOnInit() {
@@ -38,53 +39,54 @@ export class DetailComponent implements OnInit {
         this.images = res.images;
         // console.log(res.images)
         this.detailExist = true;
+        this.desableFavoris = (!this.VerifFavoris(this.numero)) ? true : false;
       })
     }
+   
+
   }
 
   Read = (id) => {
     // this.isReading = true;
-this.router.navigate(['lecture/' + id]);
+    this.router.navigate(['lecture/' + id]);
   }
 
   RetourListe = () => {
     this.router.navigate(['liste']);
   }
 
-  AddToFavoris = (id) => {
-    // localStorage.clear();
+  VerifFavoris = (id) => {
+    let jsonFavoris = localStorage.getItem('myManga');
+    this.tableauFavoris = (jsonFavoris != null) ? JSON.parse(jsonFavoris) : [];
+
+    this.tableauFavoris.forEach(element => {
+      this.isFavorisExist = (element.id == id) ? true : false;
+    });
+
+    return this.isFavorisExist;
+  }
+
+  AddInFavoris = (id: number) => {
     this.api.get('manga/' + id).subscribe((res: any) => {
-      //récupérer ce qui est dans le localStorage et le mettre dans un tableau vide puis
-      // on y ajoute la nouvelle donnée dans ce tableau
-      this.monManga = res;
+      let mangasFavoris = res;
       let json = localStorage.getItem('myManga');
-      // this.liste = (json != null) ? JSON.parse(json) : [];
 
-      if (json != null) {
-        this.liste = JSON.parse(json);
-        this.liste.forEach(element => {
-          if (element.id != id) {
-            this.liste.push(res);
-            alert("ajouté aux favoris");
-            this.router.navigate(['favoris']);
-          }
-          else {
-            alert("ce manga existe déjà dans vos favoris");
-          }
-        });
-      }
-      else {
-
-        this.liste = [];
-        this.liste.push(this.monManga);
+      this.tableauFavoris = (json != null) ? JSON.parse(json) : [];
+      this.VerifFavoris(id);
+    
+      this.api.observableFavoris.next(this.desableFavoris);
+      if (this.isFavorisExist == false) {
+        this.tableauFavoris.push(mangasFavoris);
         alert("ajouté aux favoris");
         this.router.navigate(['favoris']);
       }
-      //sauvegarde dans le localStorage
-      localStorage.setItem('myManga', JSON.stringify(this.liste));
-    })
-  }
+      else {
+        alert("exite déjà dans la liste des favoris");
+      }
 
- 
+      localStorage.setItem('myManga', JSON.stringify(this.tableauFavoris));
+    })
+
+  }
 
 }

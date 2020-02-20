@@ -15,16 +15,18 @@ export class FavorisComponent implements OnInit {
   ngOnInit() {
 
     this.favoris = JSON.parse(localStorage.getItem('myManga'));
-    
+
     console.log(this.favoris)
   }
 
   RemoveAtFavoris = (id) => {
 
     let element = this.favoris.find(elt => elt.id == id)
-  let index = this.favoris.indexOf(element)
+    let index = this.favoris.indexOf(element)
 
-  this.favoris.splice(index, 1)
-  localStorage.setItem('myManga', JSON.stringify(this.favoris)); 
+    this.favoris.splice(index, 1);
+    alert("supprimé des favoris");
+    localStorage.setItem('myManga', JSON.stringify(this.favoris));
+    this.api.observableFavoris.next(false);
   }
 }

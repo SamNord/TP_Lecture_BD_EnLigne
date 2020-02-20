@@ -9,3 +9,18 @@ a {
 .list {
     color: sandybrown;
 }
+
+.bRh :hover {
+  background-color: purple;
+  color : #0ddec2;
+  font-weight: bold;
+  font-size: 21px;
+}
+
+
+.boutonImg {
+  background-color:#0ddec2;
+    color: purple;
+    font-weight: bold;
+    font-size: 21px;
+}

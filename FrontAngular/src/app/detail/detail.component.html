@@ -1,6 +1,6 @@
 <div class="row m-3 hov">
     <div class="col-2 offset-9 bR">
-        <button class="btn retour" (click)= "RetourListe()">Retour à la liste</button>
+        <button class="btn retour" (click)="RetourListe()">Retour à la liste</button>
     </div>
 </div>
 
@@ -33,8 +33,9 @@
                         <button class="btn btn-primary" (click)="Read(numero)">Lecture Manga</button>
                     </div>
                     <div class="col-3">
-                        <button class="btn btn-success" (click)="AddToFavoris(numero)">Ajouter aux favoris</button>
-                    </div>           
+                        <button class="btn btn-success" (click)="AddInFavoris(numero)" *ngIf="desableFavoris">Ajouter
+                            aux favoris</button>                 
+                    </div>
                 </div>
             </div>
             <div class="col-2">
@@ -55,7 +56,3 @@
         </div>
     </div>
 </div> -->
-
-
-
-
