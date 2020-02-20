@@ -3,6 +3,7 @@ import { ApiService } from '../api.service';
 import { HttpEventType } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
+import { CKEditor4 } from 'ckeditor4-angular/ckeditor';
 
 @Component({
   selector: 'app-add-manga',
@@ -12,7 +13,7 @@ import { Subject } from 'rxjs';
 export class AddMangaComponent implements OnInit {
   titre: string;
   auteur: string;
-  texte: string;
+  texte;
   categorie: string;
   id: any = undefined;
   cover: any;
@@ -58,9 +59,14 @@ export class AddMangaComponent implements OnInit {
     this.api.observableUpdate.subscribe(value => {
       console.log(value)
       this.isUpdate = value;
-    })
-  
+    }) 
   }
+
+  onChange = ( event: CKEditor4.EventInfo ) => {
+    
+  this.texte = event;
+    }
+
 
   UploadCover = (event) => {
     return this.formData.append('image', event.target.files[0]);
