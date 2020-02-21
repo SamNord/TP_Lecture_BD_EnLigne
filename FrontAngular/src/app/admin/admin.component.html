@@ -22,6 +22,9 @@
                             <button *ngIf="!authStatus" class="btn btn-success" (click)= "ToConnect()">Se connecter</button>
                             <button *ngIf="authStatus" class="btn btn-danger" (click)= "toDeconnect()">Se Déconnecter</button>
                         </div>
+                        <div class="col">
+                            <button class="btn btn-primary" *ngIf = "authStatus" (click)= "Form()">Formulaire</button>
+                        </div>
                     </div>
                 </form>
             </div>
