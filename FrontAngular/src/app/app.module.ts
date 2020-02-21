@@ -26,26 +26,27 @@ import { DetailCategorieComponent } from './detail-categorie/detail-categorie.co
 import { PageUneComponent } from './page-une/page-une.component';
 import { PageUneCarousselComponent } from './page-une-caroussel/page-une-caroussel.component';
 import { SafeHtmlPipe } from './safe-html.pipe';
+import { AuthGuardService } from './auth-guard.service';
 
 
 const mesRoutes = [
   {path : '',   redirectTo : '/search', pathMatch: 'full' },
   {path : 'admin', component : AdminComponent },
-  {path : 'form', component : AddMangaComponent },
-  {path : 'update/:id', component : AddMangaComponent },
-  {path : 'cate', component : AddCategorieComponent },
-  {path : 'update/cat/:id', component : AddCategorieComponent },
-  {path : 'detail/categorie/:id', component : DetailCategorieComponent },
+  {path : 'form', canActivate: [AuthGuardService], component : AddMangaComponent },
+  {path : 'update/:id', canActivate: [AuthGuardService], component : AddMangaComponent },
+  {path : 'cate', canActivate: [AuthGuardService], component : AddCategorieComponent },
+  {path : 'update/cat/:id', canActivate: [AuthGuardService], component : AddCategorieComponent },
+  {path : 'detail/categorie/:id', canActivate: [AuthGuardService], component : DetailCategorieComponent },
   {path : 'liste', component : MangasComponent },
   {path : 'liste/:cat', component : ListByCategorieComponent },
   {path : 'search', component : SearchComponent },
-  {path : 'formImages', component : AddImagesComponent },
-  {path : 'updateImage/:id', component : AddImagesComponent },
+  {path : 'formImages', canActivate: [AuthGuardService], component : AddImagesComponent },
+  {path : 'updateImage/:id', canActivate: [AuthGuardService], component : AddImagesComponent },
   {path : 'favoris', component : FavorisComponent },
   {path : 'detail/:id', component : DetailComponent },
   {path : 'lecture/:id', component : LectureComponent },
   {path : 'test', component : TestEditorComponent },
-  {path : 'listmangasAdmin', component : ListMangasAdminComponent },
+  {path : 'listmangasAdmin', canActivate: [AuthGuardService], component : ListMangasAdminComponent },
   {path : 'list/accueil', component : PageUneComponent }
 ]
 

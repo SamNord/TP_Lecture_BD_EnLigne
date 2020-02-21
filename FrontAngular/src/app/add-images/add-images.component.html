@@ -34,7 +34,7 @@
 
 <div class="row">
     <div class="col">
-        <button class="btn btn-info" (click)= "SeeImages()">Afficher les images</button>
+        <button class="btn btn-info" (click)="SeeImages()">Afficher les images</button>
     </div>
 </div>
 
@@ -44,16 +44,16 @@
             <div class="col-3 p-1 m-3" *ngFor='let img of images'>
                 <div class="card" style="width: 11rem; height: 10rem;">
                     <img src="{{img.urlImage}}" class="card-img-top cov" alt="...">
-                    <button class="btn btn-dark" (click) ="UpdateImages(img.id)">Modifier</button>                   
+                    <!-- <button class="btn btn-dark" (click) ="UpdateImages(img.id)">Modifier</button>                    -->
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-3 form-group" *ngIf = "isModifImage">
+    <!-- <div class="col-3 form-group" *ngIf="isModifImage">
         <input type=" file" (change)="UploadImg($event)" class="form-control">
     </div>
-    <div class="col-1" *ngIf = "isModifImage">
+    <div class="col-1" *ngIf="isModifImage">
         <button class="btn btn-danger" (click)="Update()">Update</button>
-    </div>
+    </div> -->
 
 </div>

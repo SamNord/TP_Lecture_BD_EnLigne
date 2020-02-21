@@ -2,6 +2,7 @@
     overflow: scroll;
     color: rgb(110, 12, 12);
     font-weight: bold;
+    height: 200px;
 }
 
 .card-header, .card-footer {
