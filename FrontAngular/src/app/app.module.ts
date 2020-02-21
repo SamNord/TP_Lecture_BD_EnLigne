@@ -29,7 +29,7 @@ import { SafeHtmlPipe } from './safe-html.pipe';
 
 
 const mesRoutes = [
-  {path : '',   redirectTo : '/', pathMatch: 'full' },
+  {path : '',   redirectTo : '/search', pathMatch: 'full' },
   {path : 'admin', component : AdminComponent },
   {path : 'form', component : AddMangaComponent },
   {path : 'update/:id', component : AddMangaComponent },
