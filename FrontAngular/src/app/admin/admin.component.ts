@@ -37,13 +37,14 @@ export class AdminComponent implements OnInit {
       }
   }
 
-
-
   toDeconnect = () => {
     this.authService.signOut();
     this.authStatus = this.authService.isAuth;
-    this.router.navigate(['search'])
+    this.router.navigate(['admin'])
   }
 
+  Form = () => {
+    this.router.navigate(['form'])
+  }
 
 }
