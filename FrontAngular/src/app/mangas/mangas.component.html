@@ -1,8 +1,13 @@
 <div class="container">
-    <div class="row m-3 list"> 
-        <div class="col-2 m-4 p-1" *ngFor = 'let manga of mangas'>
+    <div class="row">
+        <div class="col">
+            <h1>Liste des mangas</h1>
+        </div>
+    </div>
+    <div class="row m-5 list"> 
+        <div class="col-2 m-5" *ngFor = 'let manga of mangas'>
             <div class="card" style="width: 13rem;">
-               <img src="{{manga.urlCover}}" class="card-img-top cov" alt="...">
+               <img src="{{manga.urlCover}}" class="card-img-top cov" alt="">
                 <a routerLink= "/detail/{{ manga.id }}" class="btn stretched-link">{{ manga.titre }}</a>             
             </div>
         </div>

@@ -4,8 +4,14 @@
 
 a {
   background-color: thistle;
+  width: 206px;
+  height: 59px;
 }
 
 .list {
     color: sandybrown;
+}
+
+h1 {
+  color: blanchedalmond;
 }

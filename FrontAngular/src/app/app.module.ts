@@ -25,12 +25,11 @@ import { ListMangasAdminComponent } from './list-mangas-admin/list-mangas-admin.
 import { DetailCategorieComponent } from './detail-categorie/detail-categorie.component';
 import { PageUneComponent } from './page-une/page-une.component';
 import { PageUneCarousselComponent } from './page-une-caroussel/page-une-caroussel.component';
-import { Pipe, PipeTransform } from '@angular/core';
 import { SafeHtmlPipe } from './safe-html.pipe';
 
 
 const mesRoutes = [
-  {path : '',   redirectTo : '/', pathMatch: 'full' },
+  {path : '',   redirectTo : '/search', pathMatch: 'full' },
   {path : 'admin', component : AdminComponent },
   {path : 'form', component : AddMangaComponent },
   {path : 'update/:id', component : AddMangaComponent },

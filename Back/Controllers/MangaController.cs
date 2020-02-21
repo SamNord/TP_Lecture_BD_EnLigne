@@ -54,7 +54,7 @@ namespace Back.Controllers
         public IActionResult SearchByTitle(string mot)
         {
             DataContext dc = new DataContext();
-            List<Manga> listeMangas = dc.Manga.Include(c => c.Categorie).Include(i => i.Images).Where(x => x.Titre == mot).ToList();
+            List<Manga> listeMangas = dc.Manga.Include(c => c.Categorie).Include(i => i.Images).Where(x => x.Titre.Contains(mot)).ToList();
             if (listeMangas.Count > 0)
             {
                 return Ok(listeMangas);

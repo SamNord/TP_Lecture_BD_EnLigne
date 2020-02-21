@@ -21,11 +21,13 @@ div label {
     color: white
 }
 
-/* .boutCat {
-    opacity: 0.7;
-} */
+.form {
+    border: solid 1px;
+    background-color: rgb(104, 2, 87);
+}
 
-/* input, textarea {
-    opacity: 0.7;
-  
-} */
+h6 {
+    color: yellow;
+    text-align: center;
+    justify-content: center;
+}

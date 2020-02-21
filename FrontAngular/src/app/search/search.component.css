@@ -4,10 +4,13 @@
 
 .cov {
     height: 200px;
+    
 }
 
 a {
   background-color: thistle;
+  width: 206px;
+  height: 59px;
 }
 
 .list {

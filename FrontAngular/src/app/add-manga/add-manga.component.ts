@@ -13,7 +13,7 @@ import { CKEditor4 } from 'ckeditor4-angular/ckeditor';
 export class AddMangaComponent implements OnInit {
   titre: string;
   auteur: string;
-  texte: string;
+  texte;
   categorie: string;
   id: any = undefined;
   cover: any;
@@ -27,29 +27,20 @@ export class AddMangaComponent implements OnInit {
   isUpdate;
   formDataEdit: FormData;
   listMangas;
-  valeurTexte;
 
-  // public onChange( event: CKEditor4.EventInfo ) {
-    
-  //   this.valeurTexte = event;
-  //   }
 
   constructor(private api: ApiService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-
     if (this.route.snapshot.params.id != undefined) {
       this.api.get('manga/' + this.route.snapshot.params.id).subscribe((res: any) => {
         console.log(res);
         this.id = res.id;
         this.titre = res.titre;
         this.auteur = res.auteur;
-        // this.texte = res.texte;
-       this.valeurTexte = res.texte;
+        this.texte = res.texte;
       })
     }
-
-   
 
     //pour parcourir la liste des mangas afin de ne pas ajouter le même titre
     this.api.get('manga').subscribe((response: any) => {
@@ -68,23 +59,23 @@ export class AddMangaComponent implements OnInit {
     this.api.observableUpdate.subscribe(value => {
       console.log(value)
       this.isUpdate = value;
-    })
-  
+    }) 
   }
 
-   onChange = ( event: CKEditor4.EventInfo ) => {
+  onChange = ( event: CKEditor4.EventInfo ) => {
     
-    this.valeurTexte = event;
+  this.texte = event;
     }
+
 
   UploadCover = (event) => {
     return this.formData.append('image', event.target.files[0]);
   }
 
   Add = () => {
-console.log(this.valeurTexte);
+
     this.api.get('categorie/search/' + this.cat).subscribe((res: any) => {
-      const livre = { Titre: this.titre, Auteur: this.auteur, Texte: this.valeurTexte, CategorieId: res.id };
+      const livre = { Titre: this.titre, Auteur: this.auteur, Texte: this.texte, CategorieId: res.id };
       if (this.id == undefined) {
         this.api.post('Manga', livre).subscribe((event: any) => {
 

@@ -25,9 +25,10 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <div [innerHTML] = "texte | safeHtml"></div>
+                        <div [innerHTML]="texte | safeHtml"></div>
                     </div>
                 </div>
+
                 <div class="row mb-2">
                     <div class="col-3">
                         <button class="btn btn-primary" (click)="Read(numero)">Lecture Manga</button>
