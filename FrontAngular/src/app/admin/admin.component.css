@@ -1,0 +1,9 @@
+.border {
+    border : solid 3px black;
+}
+
+.admin {
+    background-image: url(../../assets/images/fond_menu.jpg);
+    opacity: 0.9;
+}
+

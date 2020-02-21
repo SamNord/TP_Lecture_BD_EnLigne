@@ -1,0 +1,59 @@
+<div class="row m-3 hov">
+    <div class="col-2 offset-9 bR">
+        <button class="btn retour" (click)="RetourListe()">Retour à la liste</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-10 offset-1">
+        <div class="row mt-5 mb-3 cadre">
+            <div class="col-8">
+                <div class="row">
+                    <div class="col mt-3">
+                        <p>Titre : {{ titre }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p>Auteur : {{ auteur }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p>Catégorie : {{ categorie }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div [innerHTML]="texte | safeHtml"></div>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <button class="btn btn-primary" (click)="Read(numero)">Lecture Manga</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-success" (click)="AddInFavoris(numero)" *ngIf="desableFavoris">Ajouter
+                            aux favoris</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <img class="m-3 cover" src="{{ cover }}" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <button class="btn btn-warning" (click) = "seeImages()">Afficher images</button>
+<div class="row" *ngIf = "isReading">
+    <div class="col-9 offset-2 border">
+        <div class="row" *ngFor="let i of images">
+            <div class="col-5 offset-3">
+                <img src="{{ i.urlImage }}" alt="" class="img">
+            </div>
+        </div>
+    </div>
+</div> -->

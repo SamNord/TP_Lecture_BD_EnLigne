@@ -1,0 +1,52 @@
+.scroll {
+    overflow: scroll;
+    color: rgb(110, 12, 12);
+    font-weight: bold;
+    height: 200px;
+}
+
+.card-header, .card-footer {
+    background-color: #ff037d;
+}
+
+.card-header {
+    font-weight: bold;
+    color: rgb(15, 44, 206);
+}
+
+.card-body {
+    background-color: lightcoral;
+}
+
+.b1 {
+    background-color: rgb(30, 243, 243);
+    color:rgb(206, 15, 47);
+    font-weight: bold;
+}
+
+.b2 {
+    background-color:yellow;
+    color:rgb(206, 15, 47);
+    font-weight: bold;
+}
+
+.hov :hover {
+    background-color: rgb(206, 15, 47);
+    color: rgb(30, 243, 243);;
+}
+
+.bRh :hover {
+    background-color: purple;
+    color : #0ddec2;
+    font-weight: bold;
+    font-size: 21px;
+  }
+  
+  
+  .boutonImg {
+    background-color:#0ddec2;
+      color: purple;
+      font-weight: bold;
+      font-size: 21px;
+  }
+

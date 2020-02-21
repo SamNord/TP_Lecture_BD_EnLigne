@@ -21,7 +21,7 @@ namespace Back.Models
 
         public Image()
         {
-     
+
         }
     }
 }

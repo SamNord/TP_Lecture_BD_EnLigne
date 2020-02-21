@@ -1,0 +1,13 @@
+<div class="row">
+    <div class="col bg-white">
+        <h1>Mes favoris</h1>
+    </div>
+</div>
+<div class="row m-3 list"> 
+    <div class="col-2 m-4 p-1" *ngFor = 'let fav of favoris'>
+        <div class="card" style="width: 13rem;">
+           <img src="{{fav.urlCover}}" class="card-img-top cov" alt="...">
+           <button class="btn btn-danger" (click) = "RemoveAtFavoris(fav.id)">Retirer des favoris</button>
+        </div>       
+    </div>
+</div>

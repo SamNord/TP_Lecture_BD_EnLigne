@@ -1,0 +1,69 @@
+<div class="row mt-3">
+    <div class="col-3 survol">
+        <button class="btn  bouton" (click)="AjouterManga()">
+            <span *ngIf='id==null;else idNonNull'>Ajouter Manga</span>
+            <ng-template #idNonNull><span>Modifier Manga</span></ng-template>
+        </button>
+    </div>
+    <div class="col-3 survol">
+        <button class="btn  bouton" (click)="AjouterCategorie()">Ajouter catégorie</button>
+    </div>
+    <div class="col-3 survol">
+        <button class="btn  bouton" (click)="AjouterImages()">Ajouter images</button>
+    </div>
+    <div class="col-1 survol">
+        <button class="btn  bouton" (click)="SeeMangas()">Liste Mangas</button>
+    </div>
+</div>
+
+<div class="row m-5 p-3" *ngIf="isAddManga">
+    <div class="col-9 offset-1 form">
+        <h6>Ajouter un manga</h6>
+        <form class="p-3">
+            <div class="form-group">
+                <input type="text" [(ngModel)]="titre" name="titre" class="form-control" id="exampleFormControlInput1"
+                    placeholder="titre">
+            </div>
+            <div class="form-group">
+                <input type="text" [(ngModel)]="auteur" name="auteur" class="form-control" id="exampleFormControlInput1"
+                    placeholder="auteur">
+            </div>
+
+            <div class="form-group">
+                <ckeditor (change)="onChange($event)" id="editor1">
+                </ckeditor>
+            </div>
+
+
+            <div class="form-group" *ngIf="catExist == true; else addCategorie">
+                <label>Categorie</label>
+                <select class="form-control" [(ngModel)]="cat" name="cat">
+                    <option *ngFor="let i of categories"> {{ i.type }} </option>
+                </select>
+            </div>
+
+            <ng-template #addCategorie>
+                <button class="btn btn-info boutCat" (click)="addMyCategory()">Ajouter une catégorie</button>
+            </ng-template>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label>Ajouter image</label>
+                        <input type="file" #fichier (change)="UploadCover($event)" [(ngModel)]="cover" name="cover"
+                            class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-danger boutCat" (click)="Add()">
+                        <span *ngIf='id==null;else idNonNull'>Ajouter Manga</span>
+                        <ng-template #idNonNull><span>Modifier Manga</span></ng-template>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

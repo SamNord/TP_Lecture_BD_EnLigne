@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+html, body {
+    height: 110%;
+
+    // background-image: url("assets/images/fond4.jpg");
+    background-image: url("assets/images/fond7.jpg");
+    margin:0;
+  padding:0;
+  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
+  background-size: cover; /* version standardisée */
+}

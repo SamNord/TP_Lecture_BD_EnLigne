@@ -1,0 +1,21 @@
+.cov {
+    height: 200px;
+}
+
+a {
+  background-color: thistle;
+}
+
+.list {
+    color: sandybrown;
+}
+
+.bR {
+  background-color: yellow;
+  color: purple;
+}
+
+.hov :hover {
+  background-color: purple;
+  color: yellow;
+}

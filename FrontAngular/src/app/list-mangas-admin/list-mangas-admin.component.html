@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="row m-3">
+        <div class="col-4 offset-10 bRh">
+            <button class="btn b1" (click)="Retour()">Retour</button>
+        </div>
+    </div>
+    <div class="row m-3 list"> 
+        <div class="col-2 m-4 p-1" *ngFor = 'let manga of mangas'>
+            <div class="card" style="width: 13rem;">
+               <img src="{{manga.urlCover}}" class="card-img-top cov" alt="...">
+                <button class="btn btn-dark" (click)="Update(manga.id)">Modifier</button>
+                <button class="btn btn-danger" (click)="DeleteManga(manga.id)">Supprimer</button>
+            </div>          
+        </div>
+    </div>
+</div>
